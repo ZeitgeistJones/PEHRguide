@@ -1,4 +1,4 @@
-// PracticeEHR training companion — OpenAI proxy
+// PracticeEHR training companion — Gemini proxy
 // Reads public guide text from knowledge.json and answers from that only.
 
 const fs = require("fs");
@@ -14,38 +14,23 @@ try {
 }
 
 function extractAnswer(data) {
-  if (typeof data.output_text === "string" && data.output_text.trim()) {
-    return data.output_text.trim();
-  }
-
-  const parts = [];
-  for (const item of data.output || []) {
-    if (item.type === "message" && Array.isArray(item.content)) {
-      for (const c of item.content) {
-        if (c && (c.type === "output_text" || c.type === "text") && c.text) {
-          parts.push(c.text);
-        }
-      }
-    }
-  }
-  return parts.join("\n").trim();
+  const parts = data?.candidates?.[0]?.content?.parts;
+  if (!Array.isArray(parts)) return "";
+  return parts
+    .filter((p) => p && typeof p.text === "string" && !p.thought)
+    .map((p) => p.text)
+    .join("\n")
+    .trim();
 }
 
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(204).end();
-  }
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "POST only" });
   }
 
-  if (!process.env.OPENAI_API_KEY) {
+  if (!process.env.GEMINI_API_KEY) {
     return res.status(503).json({ error: "AI assistant not configured" });
   }
 
@@ -76,7 +61,7 @@ module.exports = async function handler(req, res) {
     .join("\n\n");
 
   const prompt =
-    "You are a friendly PracticeEHR training companion. Answer ONLY from the supplied training guide below, not from assumptions about actual UI buttons. Be concise, actionable, numbered steps (usually 2-5). If guide does not establish a step, clearly say it is not confirmed and advise checking with a trainer or practice admin. Never diagnose or give medical advice. Do not ask for or accept any patient-identifiable information. Never imply you can see the user's account, recording, screen, or chart. No external links unless already in guide.\n\nGUIDE:\n" +
+    "You are a friendly PracticeEHR training companion. Answer ONLY from the supplied training guide below, not from assumptions about actual UI buttons. Be concise, actionable, numbered steps (usually 2-5). Use plain text, no markdown formatting. If guide does not establish a step, clearly say it is not confirmed and advise checking with a trainer or practice admin. Never diagnose or give medical advice. Do not ask for or accept any patient-identifiable information. Never imply you can see the user's account, recording, screen, or chart. No external links unless already in guide.\n\nGUIDE:\n" +
     ctx;
 
   const previous = Array.isArray(history)
@@ -84,37 +69,51 @@ module.exports = async function handler(req, res) {
         .slice(-6)
         .filter(
           (x) =>
+            x &&
             ["user", "assistant"].includes(x.role) &&
             typeof x.content === "string" &&
             x.content.length < 1300
         )
-        .map((x) => ({ role: x.role, content: x.content }))
+        .map((x) => ({
+          role: x.role === "assistant" ? "model" : "user",
+          parts: [{ text: x.content }]
+        }))
     : [];
 
+  const model = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+    model
+  )}:generateContent`;
+
   try {
-    const upstream = await fetch("https://api.openai.com/v1/responses", {
+    const upstream = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "Bearer " + process.env.OPENAI_API_KEY,
+        "x-goog-api-key": process.env.GEMINI_API_KEY,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
-        instructions: prompt,
-        input: [...previous, { role: "user", content: message }],
-        max_output_tokens: 450,
-        store: false
+        systemInstruction: { parts: [{ text: prompt }] },
+        contents: [...previous, { role: "user", parts: [{ text: message }] }],
+        generationConfig: { maxOutputTokens: 1024 }
       })
     });
 
     if (!upstream.ok) {
       const errText = await upstream.text().catch(() => "");
-      console.error("OpenAI error", upstream.status, errText.slice(0, 500));
+      console.error("Gemini error", model, upstream.status, errText.slice(0, 500));
       throw new Error("Upstream request failed: " + upstream.status);
     }
 
     const data = await upstream.json();
     const answer = extractAnswer(data);
+    if (!answer) {
+      console.error(
+        "Gemini returned no text",
+        model,
+        JSON.stringify(data?.candidates?.[0]?.finishReason || data?.promptFeedback || {})
+      );
+    }
     return res.status(200).json({
       answer: answer || "No response returned. Please consult the guide."
     });

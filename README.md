@@ -8,7 +8,7 @@ A mobile-friendly, searchable, shareable training site based on the October 23 t
 2. Create a new GitHub repository and upload the *contents* of the site folder (not the outer ZIP).
 3. In Vercel: **Add New → Project → Import** that repository. Keep Framework Preset **Other**, then click **Deploy**.
 4. Once live, copy the Vercel `*.vercel.app` address and share it. The guide and local search work immediately.
-5. **To enable real generative AI responses:** In Vercel **Project Settings → Environment Variables**, add `OPENAI_API_KEY` with a valid API key from your own OpenAI API account; redeploy. Optionally set `OPENAI_MODEL` to a supported model. Never add your key in public HTML or commit it to GitHub. API usage costs are billed separately from ChatGPT.
+5. **To enable real generative AI responses:** In Vercel **Project Settings → Environment Variables**, add `GEMINI_API_KEY` with a key from [Google AI Studio](https://aistudio.google.com/apikey); redeploy. Optionally set `GEMINI_MODEL` (default `gemini-3.5-flash-lite`). Never add your key in public HTML or commit it to GitHub. On Gemini's free tier, Google may use prompts to improve its products.
 
 ## Privacy and safety
 - Public site includes NO original video, audio, or patient screenshots. Guide text alone is supplied to the AI endpoint.
@@ -21,4 +21,4 @@ A mobile-friendly, searchable, shareable training site based on the October 23 t
 ## Files
 - `index.html` – full site with embedded guide
 - `knowledge.json` – public, text-only guide
-- `api/chat.js` – server-side OpenAI proxy
+- `api/chat.js` – server-side Gemini proxy

@@ -376,7 +376,7 @@ async function submit(q) {
   } catch (e) {
     pending.textContent =
       localAnswer(q) +
-      "\n\nTo enable generative AI, deploy this site and configure OPENAI_API_KEY on the server.";
+      "\n\n(The AI helper is unavailable right now, so this answer comes from the built-in guide.)";
   }
 }
 

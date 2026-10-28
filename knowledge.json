@@ -1,0 +1,107 @@
+[
+  {
+    "id": "start",
+    "title": "Start here",
+    "intro": "The daily path is: find your appointment → open the patient chart → enter the visit → document → review → save or finalize.",
+    "timestamp": "Recording: ~45:00",
+    "steps": [
+      "Open PracticeEHR and check the dashboard for today’s appointments or patient list. Use the date/navigation controls to find the appointment.",
+      "Select the correct patient and confirm the correct chart before documenting. Do not document into a different patient or visit.",
+      "Open the encounter or visit and identify the note sections. The buttons shown may differ by your role and practice permissions."
+    ]
+  },
+  {
+    "id": "find",
+    "title": "Find a patient / appointment",
+    "intro": "Search from the patient list or navigate from the scheduled appointment.",
+    "timestamp": "Recording: ~03:00–09:00",
+    "steps": [
+      "From the dashboard, open the patient list or schedule. The recording moves between the home dashboard and patient list.",
+      "Use the search or filters to find the correct appointment/patient. Check date, status, and patient details before opening.",
+      "Select the appointment/record to enter the chart. If nothing shows, verify the date and any active filters."
+    ]
+  },
+  {
+    "id": "visit",
+    "title": "Open a visit",
+    "intro": "Open the selected encounter and locate the visit’s documentation sections.",
+    "timestamp": "Recording: ~12:00–15:00",
+    "steps": [
+      "Choose the intended visit associated with the patient. The recording shows the visit documentation interface.",
+      "Look for section headers and expandable areas. Common examples include HPI, ROS, exam, assessment and plan; exact labels vary.",
+      "Open the relevant section, enter or review the information, then save with the button shown. Do not assume text automatically saves or signs."
+    ]
+  },
+  {
+    "id": "scribe-settings",
+    "title": "Set up AI Scribe",
+    "intro": "The training shows a Scribe configuration screen with section-level switches, including choices for how content is handled.",
+    "timestamp": "Recording: ~18:00",
+    "steps": [
+      "Inside the visit, open AI Scribe and its settings/configuration area. This is the screen with purple toggles in the recording.",
+      "Review the available documentation sections and their toggles. The example shows sections such as HPI, ROS, History, Assessment and Plan.",
+      "Check the setting for filling or applying information to structured fields before generating a note. The screenshot alone does not establish the exact behavior of every switch. Confirm with your practice admin or a test encounter.",
+      "Save or update the configuration using the on-screen button. Do not change practice-wide defaults without authorization."
+    ]
+  },
+  {
+    "id": "scribe-record",
+    "title": "Record using AI Scribe",
+    "intro": "The training shows the Scribe workspace and generated text.",
+    "timestamp": "Recording: ~21:00–24:00",
+    "steps": [
+      "Open AI Scribe from the active encounter. Confirm the correct patient and encounter.",
+      "Use the visible recording/transcription controls as demonstrated. Obtain and document any consent required by your practice and applicable law.",
+      "Complete the recording or transcription and generate the note. Allow the system to finish processing.",
+      "Read the generated text carefully before applying it to the clinical record. Correct omissions, incorrect diagnoses, dates, and hallucinated findings."
+    ]
+  },
+  {
+    "id": "sentence",
+    "title": "Sentence View → individual boxes",
+    "intro": "The recording includes the Scribe setup area and structured documentation screen, but it does not clearly prove a one-click automatic transfer from Sentence View to every box.",
+    "timestamp": "Recording: ~18:00; 36:00–39:00",
+    "steps": [
+      "First, check the AI Scribe section configuration and any “Fill Values” setting. Look for switches affecting HPI, ROS, History, Assessment and Plan.",
+      "Return to the generated note and look for an Apply, Populate, Save, or equivalent control. Only use a control if your interface actually displays it; wording can differ.",
+      "Reopen the structured note sections to see which fields populated. The later portion of the recording displays multiple separate note fields.",
+      "If the boxes are still empty, keep the generated note available and ask your trainer/admin whether your template supports transferring it. Avoid copying content into inappropriate fields, and do not sign an incomplete note."
+    ]
+  },
+  {
+    "id": "review",
+    "title": "Review the note before finalizing",
+    "intro": "A generated note is a draft. Verify accuracy and section placement.",
+    "timestamp": "Recording: ~27:00–42:00",
+    "steps": [
+      "Check the history, symptoms and patient-reported information. Distinguish patient reports from observed findings.",
+      "Check exam and assessment for unsupported findings or diagnoses. Delete or correct AI-generated inaccuracies.",
+      "Check plan, follow-up, medications and other actions. Make sure decisions match what actually occurred.",
+      "Preview the assembled note if available, and save as draft until ready. Signing/finalizing can lock parts of the chart depending on settings."
+    ]
+  },
+  {
+    "id": "other",
+    "title": "Other tasks shown",
+    "intro": "The recording moves through additional chart sections, forms, preview/print and visit actions.",
+    "timestamp": "Recording: ~30:00–58:58",
+    "steps": [
+      "Use the top tabs/section selector to move between available visit areas. See the mid-recording navigation around 30–33 minutes.",
+      "Open structured fields and complete only the relevant sections. Around 36–39 minutes the trainer shows grouped form fields.",
+      "Use preview/print only after checking the document. Around 42 minutes the view switches to a document preview.",
+      "If a menu or button is missing, verify permission, visit status and selected chart. Avoid guessing or finalizing an uncertain action."
+    ]
+  },
+  {
+    "id": "trouble",
+    "title": "Troubleshooting",
+    "intro": "Use these checks before repeating work.",
+    "timestamp": "Reference / troubleshooting",
+    "steps": [
+      "Note stuck in Sentence View? Check Scribe section settings, then whether your template has a separate apply/populate action.",
+      "Patient or visit missing? Check schedule date, filters, search term and assigned provider.",
+      "Visit screen blank/loading? Wait for the current chart to finish, then retry navigation. Do not repeatedly submit/sign.",
+      "Unsure if note saved? Reopen the relevant section and verify persisted text and status."
+    ]
+  }
+]

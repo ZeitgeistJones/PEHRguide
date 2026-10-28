@@ -19,6 +19,6 @@ A mobile-friendly, searchable, shareable training site based on the October 23 t
 - Without a configured API key, the assistant falls back to local topic matching and explicitly labels itself non-generative.
 
 ## Files
-- `index.html` – full site with embedded guide
-- `knowledge.json` – public, text-only guide
+- `index.html` – site layout; loads all content from `knowledge.json`
+- `knowledge.json` – single source of content: training guide, telehealth, official help videos, FAQs, release notes, support contacts (used by both the page and the AI helper)
 - `api/chat.js` – server-side Gemini proxy

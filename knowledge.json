@@ -1,107 +1,754 @@
-[
-  {
-    "id": "start",
-    "title": "Start here",
-    "intro": "The daily path is: find your appointment → open the patient chart → enter the visit → document → review → save or finalize.",
-    "timestamp": "Recording: ~45:00",
-    "steps": [
-      "Open PracticeEHR and check the dashboard for today’s appointments or patient list. Use the date/navigation controls to find the appointment.",
-      "Select the correct patient and confirm the correct chart before documenting. Do not document into a different patient or visit.",
-      "Open the encounter or visit and identify the note sections. The buttons shown may differ by your role and practice permissions."
-    ]
-  },
-  {
-    "id": "find",
-    "title": "Find a patient / appointment",
-    "intro": "Search from the patient list or navigate from the scheduled appointment.",
-    "timestamp": "Recording: ~03:00–09:00",
-    "steps": [
-      "From the dashboard, open the patient list or schedule. The recording moves between the home dashboard and patient list.",
-      "Use the search or filters to find the correct appointment/patient. Check date, status, and patient details before opening.",
-      "Select the appointment/record to enter the chart. If nothing shows, verify the date and any active filters."
-    ]
-  },
-  {
-    "id": "visit",
-    "title": "Open a visit",
-    "intro": "Open the selected encounter and locate the visit’s documentation sections.",
-    "timestamp": "Recording: ~12:00–15:00",
-    "steps": [
-      "Choose the intended visit associated with the patient. The recording shows the visit documentation interface.",
-      "Look for section headers and expandable areas. Common examples include HPI, ROS, exam, assessment and plan; exact labels vary.",
-      "Open the relevant section, enter or review the information, then save with the button shown. Do not assume text automatically saves or signs."
-    ]
-  },
-  {
-    "id": "scribe-settings",
-    "title": "Set up AI Scribe",
-    "intro": "The training shows a Scribe configuration screen with section-level switches, including choices for how content is handled.",
-    "timestamp": "Recording: ~18:00",
-    "steps": [
-      "Inside the visit, open AI Scribe and its settings/configuration area. This is the screen with purple toggles in the recording.",
-      "Review the available documentation sections and their toggles. The example shows sections such as HPI, ROS, History, Assessment and Plan.",
-      "Check the setting for filling or applying information to structured fields before generating a note. The screenshot alone does not establish the exact behavior of every switch. Confirm with your practice admin or a test encounter.",
-      "Save or update the configuration using the on-screen button. Do not change practice-wide defaults without authorization."
-    ]
-  },
-  {
-    "id": "scribe-record",
-    "title": "Record using AI Scribe",
-    "intro": "The training shows the Scribe workspace and generated text.",
-    "timestamp": "Recording: ~21:00–24:00",
-    "steps": [
-      "Open AI Scribe from the active encounter. Confirm the correct patient and encounter.",
-      "Use the visible recording/transcription controls as demonstrated. Obtain and document any consent required by your practice and applicable law.",
-      "Complete the recording or transcription and generate the note. Allow the system to finish processing.",
-      "Read the generated text carefully before applying it to the clinical record. Correct omissions, incorrect diagnoses, dates, and hallucinated findings."
-    ]
-  },
-  {
-    "id": "sentence",
-    "title": "Sentence View → individual boxes",
-    "intro": "The recording includes the Scribe setup area and structured documentation screen, but it does not clearly prove a one-click automatic transfer from Sentence View to every box.",
-    "timestamp": "Recording: ~18:00; 36:00–39:00",
-    "steps": [
-      "First, check the AI Scribe section configuration and any “Fill Values” setting. Look for switches affecting HPI, ROS, History, Assessment and Plan.",
-      "Return to the generated note and look for an Apply, Populate, Save, or equivalent control. Only use a control if your interface actually displays it; wording can differ.",
-      "Reopen the structured note sections to see which fields populated. The later portion of the recording displays multiple separate note fields.",
-      "If the boxes are still empty, keep the generated note available and ask your trainer/admin whether your template supports transferring it. Avoid copying content into inappropriate fields, and do not sign an incomplete note."
-    ]
-  },
-  {
-    "id": "review",
-    "title": "Review the note before finalizing",
-    "intro": "A generated note is a draft. Verify accuracy and section placement.",
-    "timestamp": "Recording: ~27:00–42:00",
-    "steps": [
-      "Check the history, symptoms and patient-reported information. Distinguish patient reports from observed findings.",
-      "Check exam and assessment for unsupported findings or diagnoses. Delete or correct AI-generated inaccuracies.",
-      "Check plan, follow-up, medications and other actions. Make sure decisions match what actually occurred.",
-      "Preview the assembled note if available, and save as draft until ready. Signing/finalizing can lock parts of the chart depending on settings."
-    ]
-  },
-  {
-    "id": "other",
-    "title": "Other tasks shown",
-    "intro": "The recording moves through additional chart sections, forms, preview/print and visit actions.",
-    "timestamp": "Recording: ~30:00–58:58",
-    "steps": [
-      "Use the top tabs/section selector to move between available visit areas. See the mid-recording navigation around 30–33 minutes.",
-      "Open structured fields and complete only the relevant sections. Around 36–39 minutes the trainer shows grouped form fields.",
-      "Use preview/print only after checking the document. Around 42 minutes the view switches to a document preview.",
-      "If a menu or button is missing, verify permission, visit status and selected chart. Avoid guessing or finalizing an uncertain action."
-    ]
-  },
-  {
-    "id": "trouble",
-    "title": "Troubleshooting",
-    "intro": "Use these checks before repeating work.",
-    "timestamp": "Reference / troubleshooting",
-    "steps": [
-      "Note stuck in Sentence View? Check Scribe section settings, then whether your template has a separate apply/populate action.",
-      "Patient or visit missing? Check schedule date, filters, search term and assigned provider.",
-      "Visit screen blank/loading? Wait for the current chart to finish, then retry navigation. Do not repeatedly submit/sign.",
-      "Unsure if note saved? Reopen the relevant section and verify persisted text and status."
-    ]
+{
+  "updated": "October 28, 2026",
+  "guide": [
+    {
+      "id": "start",
+      "title": "Start here",
+      "intro": "The daily path is: find your appointment → open the patient chart → enter the visit → document → review → save or finalize.",
+      "timestamp": "Recording: ~45:00",
+      "steps": [
+        "Open PracticeEHR and check the dashboard for today’s appointments or patient list. Use the date/navigation controls to find the appointment.",
+        "Select the correct patient and confirm the correct chart before documenting. Do not document into a different patient or visit.",
+        "Open the encounter or visit and identify the note sections. The buttons shown may differ by your role and practice permissions."
+      ],
+      "source": "training"
+    },
+    {
+      "id": "find",
+      "title": "Find a patient / appointment",
+      "intro": "Search from the patient list or navigate from the scheduled appointment.",
+      "timestamp": "Recording: ~03:00–09:00",
+      "steps": [
+        "From the dashboard, open the patient list or schedule. The recording moves between the home dashboard and patient list.",
+        "Use the search or filters to find the correct appointment/patient. Check date, status, and patient details before opening.",
+        "Select the appointment/record to enter the chart. If nothing shows, verify the date and any active filters."
+      ],
+      "source": "training"
+    },
+    {
+      "id": "visit",
+      "title": "Open a visit",
+      "intro": "Open the selected encounter and locate the visit’s documentation sections.",
+      "timestamp": "Recording: ~12:00–15:00",
+      "steps": [
+        "Choose the intended visit associated with the patient. The recording shows the visit documentation interface.",
+        "Look for section headers and expandable areas. Common examples include HPI, ROS, exam, assessment and plan; exact labels vary.",
+        "Open the relevant section, enter or review the information, then save with the button shown. Do not assume text automatically saves or signs."
+      ],
+      "source": "training"
+    },
+    {
+      "id": "telehealth",
+      "title": "Telehealth (TeleVisit)",
+      "source": "official",
+      "intro": "TeleVisit is PracticeEHR's built-in, HIPAA-compliant video visit. Patients join from a secure link with no downloads or extra logins, and you chart and bill the visit like an in-office one.",
+      "timestamp": "PracticeEHR Help Center + release notes, Jul–Aug 2026",
+      "steps": [
+        "Schedule: book the virtual visit from the PracticeEHR calendar. Use an appointment reason set up with the Televisit appointment type so the Televisit co-pay applies (Aug 2026).",
+        "Notify: the patient gets automated reminders in the Patient Portal and a secure TeleVisit link by text or email. They join with one click.",
+        "Waiting room: go to Home > Televisit Waiting Room. Each patient shows check-in time, status, reason, provider, and copay.",
+        "Verify first: open the verification for the appointment, fill in the details, and confirm. The visit cannot start until it is verified. Status is yellow while pending and green when ready.",
+        "Start the visit from the waiting room or your homescreen. HD video and audio open inside PracticeEHR.",
+        "Document: AI Scribe can transcribe the TeleVisit hands-free. Review the draft before accepting it, the same as an in-office note.",
+        "Patient never joined? Open the Status dropdown and choose No Show. It is only available while the status is Pending Verification or Waiting to Start Televisit, not after the visit starts. The calendar updates automatically.",
+        "Bill the TeleVisit through the normal billing workflow, just like an in-person encounter."
+      ],
+      "tips": [
+        "Follow your practice's telehealth consent policy, and confirm you have the right patient before starting.",
+        "If your practice uses the Zoom integration (July 2026), you can start Zoom meetings from PracticeEHR, email invites, add multiple participants, and use Reconnect to rejoin without a new session.",
+        "Group sessions show a small group icon next to the patient's name in the Televisit Waiting Room."
+      ],
+      "video": {
+        "id": "oct930cso4",
+        "title": "Managing Your Televisit Waiting Room",
+        "url": "https://helpcenter.practiceehr.com/home/managing-televisit-waiting-room"
+      },
+      "links": [
+        {
+          "label": "TeleVisit product page",
+          "url": "https://www.practiceehr.com/product/televisit"
+        },
+        {
+          "label": "August 2026 release notes (No Show, Televisit co-pay)",
+          "url": "https://www.practiceehr.com/latest-releases/august-2026"
+        },
+        {
+          "label": "July 2026 release notes (Zoom integration)",
+          "url": "https://www.practiceehr.com/latest-releases/july-2026"
+        }
+      ]
+    },
+    {
+      "id": "scribe-settings",
+      "title": "Set up AI Scribe",
+      "intro": "The training shows a Scribe configuration screen with section-level switches, including choices for how content is handled.",
+      "timestamp": "Recording: ~18:00",
+      "steps": [
+        "Inside the visit, open AI Scribe and its settings/configuration area. This is the screen with purple toggles in the recording.",
+        "Review the available documentation sections and their toggles. The example shows sections such as HPI, ROS, History, Assessment and Plan.",
+        "Check the setting for filling or applying information to structured fields before generating a note. The screenshot alone does not establish the exact behavior of every switch. Confirm with your practice admin or a test encounter.",
+        "Save or update the configuration using the on-screen button. Do not change practice-wide defaults without authorization."
+      ],
+      "source": "training"
+    },
+    {
+      "id": "scribe-record",
+      "title": "Record using AI Scribe",
+      "intro": "The training shows the Scribe workspace and generated text.",
+      "timestamp": "Recording: ~21:00–24:00",
+      "steps": [
+        "Open AI Scribe from the active encounter. Confirm the correct patient and encounter.",
+        "Use the visible recording/transcription controls as demonstrated. Obtain and document any consent required by your practice and applicable law.",
+        "Complete the recording or transcription and generate the note. Allow the system to finish processing.",
+        "Read the generated text carefully before applying it to the clinical record. Correct omissions, incorrect diagnoses, dates, and hallucinated findings.",
+        "To refine a draft, use the regenerate icon on a section card (presets like Make it shorter, More detail, Bullet points) or Regenerate Note for several sections. Each change creates a version (v2, v3) and Undo steps back. Source: Sept 2026 release notes."
+      ],
+      "source": "training",
+      "links": [
+        {
+          "label": "September 2026 release notes (Pre-scribe & Post-scribe)",
+          "url": "https://www.practiceehr.com/latest-releases/september-2026"
+        }
+      ]
+    },
+    {
+      "id": "sentence",
+      "title": "Sentence View → individual boxes",
+      "source": "official",
+      "intro": "PracticeEHR's September 2026 release notes describe the AI Scribe flow: generate the note, Accept it into the visit, and use Fill Value to fill the visit fields. The training recording shows the setup screen (~18:00) and separate note fields (~36:00–39:00). Exact buttons can vary by practice settings, so confirm in your account.",
+      "timestamp": "Training ~18:00, 36:00–39:00 + Sept 2026 release notes",
+      "steps": [
+        "In the visit, open AI Scribe from the Scribes pill or the microphone icon in the Open Visit toolbar.",
+        "Open AI Scribe Settings. Each section (HPI, Assessment, ROS, History, Notes) has Output Size, Output Format, and Custom Instructions. Check the Fill Values switches shown in the training, then click Update Settings. Settings carry over to your next visit.",
+        "Record or play the audio and generate the note. It appears as section cards plus a Plan table. Review each card carefully.",
+        "Click Accept to bring the note into the visit (Reject discards it).",
+        "Use Fill Value (Open Visit > Scribes > Fill Value) to fill the generated content into the visit's fields. The September 2026 update made Fill Value faster.",
+        "Reopen the structured sections to confirm which boxes populated. If they are still empty, ask your trainer or admin whether your template supports it, and do not sign an incomplete note."
+      ],
+      "tips": [
+        "Shortcuts now work in Sentence View: type @ to open the Insert Shortcut picker, or type a shortcut and press Space (Sept 2026)."
+      ],
+      "links": [
+        {
+          "label": "September 2026 release notes",
+          "url": "https://www.practiceehr.com/latest-releases/september-2026"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "title": "Review the note before finalizing",
+      "intro": "A generated note is a draft. Verify accuracy and section placement.",
+      "timestamp": "Recording: ~27:00–42:00",
+      "steps": [
+        "Check the history, symptoms and patient-reported information. Distinguish patient reports from observed findings.",
+        "Check exam and assessment for unsupported findings or diagnoses. Delete or correct AI-generated inaccuracies.",
+        "Check plan, follow-up, medications and other actions. Make sure decisions match what actually occurred.",
+        "Preview the assembled note if available, and save as draft until ready. Signing/finalizing can lock parts of the chart depending on settings."
+      ],
+      "source": "training"
+    },
+    {
+      "id": "other",
+      "title": "Other tasks shown",
+      "intro": "The recording moves through additional chart sections, forms, preview/print and visit actions.",
+      "timestamp": "Recording: ~30:00–58:58",
+      "steps": [
+        "Use the top tabs/section selector to move between available visit areas. See the mid-recording navigation around 30–33 minutes.",
+        "Open structured fields and complete only the relevant sections. Around 36–39 minutes the trainer shows grouped form fields.",
+        "Use preview/print only after checking the document. Around 42 minutes the view switches to a document preview.",
+        "If a menu or button is missing, verify permission, visit status and selected chart. Avoid guessing or finalizing an uncertain action."
+      ],
+      "source": "training"
+    },
+    {
+      "id": "trouble",
+      "title": "Troubleshooting",
+      "intro": "Use these checks before repeating work.",
+      "timestamp": "Reference / troubleshooting",
+      "steps": [
+        "Note stuck in Sentence View? Check Scribe section settings, then whether your template has a separate apply/populate action.",
+        "Patient or visit missing? Check schedule date, filters, search term and assigned provider.",
+        "Visit screen blank/loading? Wait for the current chart to finish, then retry navigation. Do not repeatedly submit/sign.",
+        "Unsure if note saved? Reopen the relevant section and verify persisted text and status."
+      ],
+      "source": "training"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is telehealth included?",
+      "a": "Yes. TeleVisit is built in, not a bolt-on. You launch HD video visits, chart in real time with AI Scribe, and bill from the same place, with one-click join for patients and providers and automated reminders that include a secure link."
+    },
+    {
+      "q": "Is TeleVisit HIPAA-compliant and secure?",
+      "a": "Yes. TeleVisit is HIPAA-compliant and SOC 2 attested, using encrypted video, secure messaging, and cloud-based access."
+    },
+    {
+      "q": "Can TeleVisit be used for follow-ups, refills, and chronic care?",
+      "a": "Yes. It handles quick check-ins, refills, post-op visits, and chronic care management, and everything syncs to the patient record."
+    },
+    {
+      "q": "Can TeleVisit encounters be billed like in-office visits?",
+      "a": "Yes. Virtual visits are documented and billed through the same standard billing workflow as in-person encounters."
+    },
+    {
+      "q": "How does AI Scribe work?",
+      "a": "During the visit, AI Scribe captures the conversation, transcribes it (20+ languages), and structures it into a SOAP note with suggested ICD-10 and CPT codes. You review and edit before signing. Nothing is filed without your sign-off."
+    },
+    {
+      "q": "Will the AI make decisions without me?",
+      "a": "No. Every AI tool uses a suggest-then-approve model. It drafts the note, flags the claim, matches the fax, or queues the call, and you confirm before anything becomes final, with audit trails on changes."
+    },
+    {
+      "q": "What AI tools does PracticeEHR have?",
+      "a": "AI Scribe writes the visit note. AI Scanner reads IDs and insurance cards. AI Fax files incoming faxes to the right chart. AI Claim Editor flags claim risks before submission. AI Assist answers questions and runs tasks via chat. AI Agents handle inbound and outbound patient calls."
+    },
+    {
+      "q": "Do I have to use the AI features?",
+      "a": "No. You decide what to turn on. Most practices start with one tool, often AI Scribe or AI Scanner, and add more over time."
+    },
+    {
+      "q": "Where can I get help inside PracticeEHR?",
+      "a": "AI Assist is the built-in assistant. Ask in plain language, for example \"how do I start AI Scribe during a visit?\", and get step-by-step help without leaving the screen."
+    },
+    {
+      "q": "Do I need to install anything?",
+      "a": "No. PracticeEHR is cloud-based and runs in any modern browser on Mac or PC. Updates happen automatically. Optional hardware: a tablet for the check-in kiosk and a scanner or phone camera for AI Scanner."
+    },
+    {
+      "q": "Is there a mobile app?",
+      "a": "Yes. PracticeEHR Go runs on iOS and Android. Providers can chart with AI Scribe, review charts, confirm appointments, message patients and staff, upload documents from the camera, and check KPIs."
+    },
+    {
+      "q": "What can patients do in the patient portal?",
+      "a": "View records and lab results, book and reschedule appointments, join TeleVisits, message providers securely, sign forms, and pay bills online. At the kiosk they can check in and pay copays on a tablet."
+    },
+    {
+      "q": "Can templates and workflows be customized?",
+      "a": "Yes. Templates, custom abbreviations, intake forms, KPIs, and permissions can all be configured to your practice."
+    },
+    {
+      "q": "Does it support multiple providers and locations?",
+      "a": "Yes. Manage providers, rooms, and availability across locations from one calendar, with role-based permissions and per-provider or per-location reporting."
+    },
+    {
+      "q": "Is PracticeEHR HIPAA compliant?",
+      "a": "Yes. It is HIPAA compliant and SOC 2 attested, with end-to-end encryption, audit trails on every change, and 99.9% uptime. PracticePay payment processing is PCI compliant."
+    },
+    {
+      "q": "Is e-prescribing certified for controlled substances (EPCS)?",
+      "a": "Yes. E-prescribing is EPCS-certified, so you can send prescriptions including controlled substances with full audit trails."
+    },
+    {
+      "q": "Is PracticeEHR ONC-certified?",
+      "a": "Yes. It is ONC-certified Health IT (supports Promoting Interoperability and MIPS reporting), Surescripts certified, and SOC 2 attested."
+    }
+  ],
+  "videos": [
+    {
+      "id": "home",
+      "label": "Dashboard & daily work",
+      "items": [
+        {
+          "title": "Getting Started with Your Dashboard",
+          "tagline": "Learn What's on Your Dashboard & Where to Find It",
+          "url": "https://helpcenter.practiceehr.com/home/dashboard-navigation",
+          "updated": "June 10, 2026",
+          "summary": "Start here. The dashboard is your first look at the practice each day, and most of what you need is already on the screen. This video walks through the quick access features at the top, your tasks and quick actions, and the appointment breakdown below them. You'll also learn where to find your recent activity, your visit and payer mix, and your performance trends, along with how to open a fuller view of any of it.",
+          "wistia": "f83rmzzuur"
+        },
+        {
+          "title": "Viewing Today's Appointments",
+          "tagline": "Learn How to Filter & Read Today's Schedule",
+          "url": "https://helpcenter.practiceehr.com/home/viewing-todays-appointments",
+          "updated": "July 27, 2026",
+          "summary": "Today's Appointments is your live snapshot of the day, showing every booked appointment with its time, patient, status, reason, provider, location, and copay. This video covers how to filter the list by provider, location, and status, so you can pull up one provider's schedule, a single office, or just the patients who've confirmed. You'll also see how appointments are color-coded by status, how to search for a particular patient, and how to hide the columns you don't need.",
+          "wistia": "q0llaczoc8"
+        },
+        {
+          "title": "Tracking Patients in Office",
+          "tagline": "Learn How to Track Patients & Monitor Flow",
+          "url": "https://helpcenter.practiceehr.com/home/tracking-patients-in-office",
+          "updated": "July 27, 2026",
+          "summary": "Patients In Office is your list of who's checked in and waiting, with check-in time, status, reason, provider, location, and copay for each patient. This video covers filtering by provider and location, searching for a patient, choosing your columns, and exporting the list to Excel when you need it outside the system. You'll also see the Patient Tracker Board, where your team can follow every patient in real time, from their room and wait timer through triage, labs, meds, and discharge.",
+          "wistia": "8rxos3nyvz"
+        },
+        {
+          "title": "Managing Your Televisit Waiting Room",
+          "tagline": "Learn How to Verify Appointments & Start a Televisit",
+          "url": "https://helpcenter.practiceehr.com/home/managing-televisit-waiting-room",
+          "updated": "July 27, 2026",
+          "summary": "The Televisit Waiting Room is where your virtual patients wait, each one listed with their check-in time, status, reason, provider, and copay. This video covers the verification step first, since an appointment has to be verified before the visit can begin. You'll see how to open it, fill in the details, and confirm. You'll also learn to read the status, yellow while it's pending and green once it's ready, and the different ways to jump into the session when your patient is waiting.",
+          "wistia": "oct930cso4"
+        },
+        {
+          "title": "Tracking Unfinished Visit Notes",
+          "tagline": "Learn How to Find & Complete Unfinished Notes",
+          "url": "https://helpcenter.practiceehr.com/home/tracking-unfinished-visit-notes",
+          "updated": "July 27, 2026",
+          "summary": "Notes In Progress keeps track of every visit note that's been started but not yet finished, with a count on the menu showing how many are open. This video walks through the provider and location filters, so a provider can pull up just their own notes, and shows what each row tells you: the visit date, patient, chief complaint, and status. You'll also learn how to read that status, whether a note is still in progress, ready for review, or ready for the doctor, and how to click straight into one and pick up where you left off.",
+          "wistia": "6veinsftl4"
+        },
+        {
+          "title": "Finding and Managing Unbilled Encounters",
+          "tagline": "Learn How to Spot Visits That Haven't Been Billed",
+          "url": "https://helpcenter.practiceehr.com/home/finding-and-managing-not-billed-encounters",
+          "updated": "July 27, 2026",
+          "summary": "Not Billed Encounters catches the visits that have happened but haven't made it to billing, with a count on the menu showing how many are waiting. This video walks through the provider, location, and status filters at the top, and what each row tells you: the visit date, patient, chief complaint, status, and plan. You'll also learn how to read the status, which tells you exactly what's holding an encounter back, so you can separate the ones ready to bill from the ones still needing clinical work.",
+          "wistia": "aseqnffvsm"
+        },
+        {
+          "title": "Creating & Managing Tasks",
+          "tagline": "Learn How to Create a Task, Assign It & Track It",
+          "url": "https://helpcenter.practiceehr.com/home/creating-and-managing-tasks",
+          "updated": "July 28, 2026",
+          "summary": "Tasks begin as patient messages, so you create them where the work actually comes up rather than in a separate list. This video walks through the new message window and what to fill in, then shows you the Tasks screen with a count of everything currently open. You'll also learn to sort by due date to surface what needs attention first, search for a particular task, mark one resolved, and switch on the toggle to review what's already been completed.",
+          "wistia": "m9pp5wzeny"
+        },
+        {
+          "title": "Reviewing & Verifying Lab Results",
+          "tagline": "Learn How to Open, Review & Sign Off on Labs",
+          "url": "https://helpcenter.practiceehr.com/home/reviewing-and-verifying-lab-results",
+          "updated": "July 28, 2026",
+          "summary": "Pending Review Labs shows every lab result waiting on you, with a badge on the menu telling you how many need attention. This video walks through the lab alerts toggle, which flags results with alerts on them so anything unusual stands out, and how to switch back to your full pending list. You'll also learn how to open a patient's full lab record or go straight into a test, where you'll find each result component with its value, range, and alerts, plus how to verify results or clear all the normal ones at once.",
+          "wistia": "k7v7ye816t"
+        },
+        {
+          "title": "Getting Help from Support",
+          "tagline": "Learn How to Submit & Follow Up on Support Requests",
+          "url": "https://helpcenter.practiceehr.com/home/getting-help-from-support",
+          "updated": "July 28, 2026",
+          "summary": "The Support Center is where you get in touch with our team and keep an eye on the requests you've already sent in. This video walks through the ticket list, with a status dropdown for filtering by open, in progress, pending on client, resolved, or reopened. You'll also learn how to raise a new ticket, from picking a category and writing your description to setting a priority and attaching an image if it helps show the problem.",
+          "wistia": "a8mi6oy1nf"
+        }
+      ]
+    },
+    {
+      "id": "patient",
+      "label": "Patients & charts",
+      "items": [
+        {
+          "title": "Adding a New Patient",
+          "tagline": "Learn How to Register a Patient in Under a Minute",
+          "url": "https://helpcenter.practiceehr.com/patient/adding-a-new-patient",
+          "updated": "July 28, 2026",
+          "summary": "Before you can book an appointment or start a visit, the patient needs a record. This is where you create one. This video covers three ways in: scanning a document and letting the AI scanner fill in the details, importing an insurance card or driver's license, or typing everything in yourself. You'll also learn a couple of things that speed the form up, including searchable fields for provider, location, and pharmacy, and the patient color tag that makes someone easy to spot on a busy list.",
+          "wistia": "bpyo6wd90l"
+        },
+        {
+          "title": "Searching for a Patient",
+          "tagline": "Learn How to Search & Open a Patient's Chart",
+          "url": "https://helpcenter.practiceehr.com/patient/searching-for-a-patient",
+          "updated": "July 28, 2026",
+          "summary": "However you like to work, a patient is only a quick search away. This video covers the search box at the top of the screen, where the list narrows as you type and you click through to open the chart. You'll also see how to search from Quick Actions if you're heading straight into a new visit or encounter, and how the Patient module prompts you to search the moment you open it.",
+          "wistia": "rso8lnh6pm"
+        },
+        {
+          "title": "The Patient Chart",
+          "tagline": "Learn How to Read & Rearrange the Chart",
+          "url": "https://helpcenter.practiceehr.com/patient/the-patient-chart",
+          "updated": "July 28, 2026",
+          "summary": "Open a patient, and their chart shows you the whole picture, from their pharmacy and primary care provider down to their visits, vitals, labs, and appointments. This video covers the alerts that pop up first, worth reading every time, and the quick actions for a walk-in check-in, printing the chart, or opening settings. You'll also learn how to rearrange the cards by dragging them, and how the left menu expands on hover and stays open when you lock it, or collapses to icons when you want more room.",
+          "wistia": "jdaso3k7rv"
+        },
+        {
+          "title": "Reviewing Visits & Starting a New One",
+          "tagline": "Learn How to Find Past Visits & Launch a New Visit",
+          "url": "https://helpcenter.practiceehr.com/patient/reviewing-visits-and-starting-a-new-one",
+          "updated": "July 28, 2026",
+          "summary": "Every visit a patient has had, and any coming up, is listed right on their chart with the template, chief complaint, date, provider, and visit type. This video walks through searching that list by chief complaint, provider, CPT, or ICD code, and narrowing it to a time range when you only want recent visits. You'll also learn how to start a new visit from the chart, what to set on the start screen, and how to run a quick encounter instead when all you need is a super bill.",
+          "wistia": "p4tgsp7jdc"
+        },
+        {
+          "title": "Reviewing the Flow Sheet",
+          "tagline": "Learn How to Open, Expand & Search the Flow Sheet",
+          "url": "https://helpcenter.practiceehr.com/patient/reviewing-the-flow-sheet",
+          "updated": "July 28, 2026",
+          "summary": "Rather than opening visit after visit, the flow sheet gives you everything recorded for a patient in a single list. This video covers what's on it: each section labeled with a count, so you can tell at a glance there are twenty-eight HPI items or forty under ROS before you open anything. You'll also see how clicking a section expands it to show the entries underneath, drawn from across the patient's visits, and how the search box narrows the list when you know what you're after.",
+          "wistia": "uy4cax6cln"
+        },
+        {
+          "title": "The Demographics Screen",
+          "tagline": "Learn How to Navigate & Edit Demographics",
+          "url": "https://helpcenter.practiceehr.com/patient/the-demographics-screen",
+          "updated": "July 28, 2026",
+          "summary": "The demographic screen holds all of a patient's personal and contact information, and you open it straight from their chart. This video walks through the section list down the left side, so you can click through to something like the referring provider without scrolling to find it, or work through the whole page top to bottom if you'd rather. You'll also learn where to fill in and update the patient's details, how patient colors give you a quick visual tag on schedules and lists, and what sits behind the gear icon at the top.",
+          "wistia": "lqgy0744ih"
+        },
+        {
+          "title": "Managing Patient Insurance",
+          "tagline": "Learn How to Set Up Plans & Check Coverage",
+          "url": "https://helpcenter.practiceehr.com/patient/managing-patient-insurance",
+          "updated": "July 28, 2026",
+          "summary": "The insurance screen is where you add and manage a patient's plans, and it opens straight from their chart with any existing plans listed at the top. This video walks through adding a plan, from the relationship to the subscriber and the payer, down to the member ID, group number, and workers' comp details when they apply. You'll also learn how scanning the insurance card fills the fields for you, and how referral management at the bottom lets you add a referral and check eligibility alongside the plans.",
+          "wistia": "5ag8fs8vph"
+        },
+        {
+          "title": "The Patient Financial Screen",
+          "tagline": "Learn How to Read the Account & Collect Payments",
+          "url": "https://helpcenter.practiceehr.com/patient/the-patient-financial-screen",
+          "updated": "July 28, 2026",
+          "summary": "Everything about a patient's money sits on the financial screen, from what they owe to what they've paid. This video covers the payment window, where you enter the amount, pick the ledger, set the payment type, add a discount if there is one, and print a receipt. You'll also see how the KPIs up top summarize the account, how to take an advance payment for money collected up front, and how to open any past visit from the statement history.",
+          "wistia": "rqvoibf7xu"
+        },
+        {
+          "title": "Managing Patient Documents",
+          "tagline": "Learn How to Find, View & Manage Documents on File",
+          "url": "https://helpcenter.practiceehr.com/patient/managing-patient-documents",
+          "updated": "July 28, 2026",
+          "summary": "The documents screen is where everything on file for a patient is stored and organized, and it opens from their chart. This video walks through the document types down the left, so you can filter to just encounters, forms, or lab results, or leave it on all, and what each row tells you about a file. You'll also learn how to preview a document, import a new one, and use the gear menu to scan, fax, or link a document to a message.",
+          "wistia": "eerz7fnmn4"
+        },
+        {
+          "title": "Patient Messages",
+          "tagline": "Learn How to Read, Send & Track Patient Messages",
+          "url": "https://helpcenter.practiceehr.com/patient/patient-messages",
+          "updated": "July 28, 2026",
+          "summary": "The messages screen keeps every conversation and communication tied to a patient in one spot, with two tabs at the top for patient messages and SMS conversations. This video walks through the message list, what each column tells you, and how to search and filter down by status, type, or who it's assigned to, plus the resolved toggle for bringing closed messages back into view. You'll also learn how to send a new message, including templates, and how it reaches the patient, and how the SMS tab shows your text thread with pending, sent, and seen status on each one.",
+          "wistia": "yriydwoasv"
+        },
+        {
+          "title": "How to Order a Lab",
+          "tagline": "Learn How to Set Up & Send a Lab Order",
+          "url": "https://helpcenter.practiceehr.com/patient/how-to-order-a-lab",
+          "updated": "July 28, 2026",
+          "summary": "Every lab you order starts on the order lab screen, and it takes only a few fields to get one out the door. This video covers filling in the provider and test, choosing an external or in-house lab, setting fasting and priority, and adding the assessment the order is tied to. You'll also see how view more opens the extra fields when you need them, and the three ways to send an order: print requisition, paper requisition, or send electronically.",
+          "wistia": "4ag76ooaeo"
+        },
+        {
+          "title": "Working Through Lab Results",
+          "tagline": "Learn How to Track, Review & Verify Labs",
+          "url": "https://helpcenter.practiceehr.com/patient/working-through-lab-results",
+          "updated": "July 28, 2026",
+          "summary": "Once a lab is ordered, it moves through the tabs across the top of the lab screen, and this video follows it all the way to review. You'll see how an order sits under waiting for results, then moves to pending doctor review when results come back, showing the result date, test, status, and each component with its value and range. You'll also learn how alerts flag anything outside the normal range, how to verify a result or clear all the normal ones at once, and where the all labs tab keeps the patient's full record.",
+          "wistia": "aq1d0sptwa"
+        },
+        {
+          "title": "How to Prescribe a Medication",
+          "tagline": "Learn How to Prescribe by eRx, Paper or Print",
+          "url": "https://helpcenter.practiceehr.com/patient/how-to-prescribe-a-medication",
+          "updated": "July 28, 2026",
+          "summary": "Prescribing a medication starts from the medication screen in the patient module. This video walks through searching for the drug, where the common sigs populate, so you can pick one instead of typing it, then choosing the provider and setting the dose and dispensing details. You'll also learn the three ways to issue it: eRx straight to the pharmacy, paper Rx, or print, and the extra authentication step required when you're prescribing a controlled substance.",
+          "wistia": "0b9knrzioc"
+        },
+        {
+          "title": "Managing Medications & Allergies",
+          "tagline": "Learn Rx Status, Allergies & the Full Drug Picture",
+          "url": "https://helpcenter.practiceehr.com/patient/managing-medications-and-allergies",
+          "updated": "July 28, 2026",
+          "summary": "The medication screen lists a patient's current medications together, each one carrying an Rx status that tells you exactly where it stands. This video walks through what those statuses mean, from external and paper through pending, eRx, and renew, and how to act on a medication from the list. You'll also learn how to record an allergy, and what the gear icon gives you, from full drug history and online Rx to eligibility checks, patient education, and detailed drug information.",
+          "wistia": "6lv2aw4vyu"
+        }
+      ]
+    },
+    {
+      "id": "scheduling",
+      "label": "Scheduling",
+      "items": [
+        {
+          "title": "How to Create a Provider Schedule",
+          "tagline": "Learn How to Open a Provider Up for Booking",
+          "url": "https://helpcenter.practiceehr.com/scheduling/how-to-create-a-provider-schedule",
+          "updated": "July 28, 2026",
+          "summary": "A provider's schedule is what creates their bookable slots, and this video shows you how to build one. It walks through opening the provider schedule, reading the existing schedules listed for them, and starting a new one with the location, date range, time range, and slot length. You'll also learn about the settings that shape it, from enforcing a reason on bookings to marking a provider unavailable and allowing overbooking when you need to double-book.",
+          "wistia": "64or0st7mn"
+        },
+        {
+          "title": "How to Book a Patient Appointment",
+          "tagline": "Learn Appointment Booking from Start to Finish",
+          "url": "https://helpcenter.practiceehr.com/scheduling/how-to-book-an-appointment",
+          "updated": "July 28, 2026",
+          "summary": "Booking an appointment starts from the scheduling calendar once the provider has a schedule in place. This video walks through the two ways to open the create appointment window: the plus icon or clicking an open slot, then searching for the patient or creating one on the spot. You'll also learn how alerts flag a clinical or financial issue before you book, how the slots update to show what's actually open, and how to attach the kiosk and intake forms to the visit.",
+          "wistia": "cpjh87mv3g"
+        },
+        {
+          "title": "Getting Around the Calendar",
+          "tagline": "Learn Views, Status Colors & AI Show-Up Rate",
+          "url": "https://helpcenter.practiceehr.com/scheduling/getting-around-the-calendar",
+          "updated": "July 28, 2026",
+          "summary": "The scheduling calendar is built around whoever you're looking at, so it starts by asking you to pick a provider. This video walks through setting that up from the left, then moving between daily, weekly, monthly, and scheduled views, and reading each appointment block by its status color. You'll also learn how hovering shows a visit's full details without opening it, what the show-up probability tells you, and how to line up several providers side by side.",
+          "wistia": "izud0y7gj8"
+        },
+        {
+          "title": "Managing a Booked Appointment",
+          "tagline": "Learn How to Open, Update & Bill an Appointment",
+          "url": "https://helpcenter.practiceehr.com/scheduling/managing-a-booked-appointment",
+          "updated": "July 28, 2026",
+          "summary": "Once an appointment is on the calendar, its detail screen is where you make any changes. This video covers opening an appointment, reading the patient and visit information at the top, and changing the status, from confirmed to rescheduled to no-show, then saving it. You'll also see the actions in the gear menu, including eligibility, history, delete, and the super bill that takes you straight into billing the visit.",
+          "wistia": "b3cofdwuxc"
+        },
+        {
+          "title": "The Scheduling Waitlist",
+          "tagline": "Learn How to Track Patients Waiting for a Slot",
+          "url": "https://helpcenter.practiceehr.com/scheduling/the-scheduling-waitlist",
+          "updated": "July 28, 2026",
+          "summary": "The waitlist keeps track of patients who want to be seen as soon as a slot opens up. This video walks through adding someone, from searching or creating the patient to setting their visit type, preferred date, provider, and a first and second preferred time. You'll also learn how the unresolved, resolved, and all tabs work, how to mark a patient resolved once they're booked, and how to find a specific entry with search and filters.",
+          "wistia": "ku1vs0zbah"
+        },
+        {
+          "title": "Searching the Schedule",
+          "tagline": "Learn How to Find Slots & Manage Them",
+          "url": "https://helpcenter.practiceehr.com/scheduling/searching-the-schedule",
+          "updated": "July 28, 2026",
+          "summary": "The search screen lets you pull up slots and appointments across the schedule, from a quick lookup to a detailed filter. This video walks through the simple search by provider and date, then the advanced search, where you can add location, reason, time range, and specific working days. You'll also learn to read the numbers across the top, work through the grouped results, and act on a slot directly, changing its provider, deleting it, or blocking and unblocking it.",
+          "wistia": "uh6qy11z15"
+        },
+        {
+          "title": "The Scheduling Day Sheet",
+          "tagline": "Learn How to Review & Manage a Day's Appointments",
+          "url": "https://helpcenter.practiceehr.com/scheduling/the-scheduling-day-sheet",
+          "updated": "July 28, 2026",
+          "summary": "The scheduling day sheet lays out every appointment for a provider so you can review and manage the day in one place. This video covers pulling it up by provider and date, adding advanced filters when you need them, and reading each appointment's details, including its show-up probability. You'll also see how to act on an appointment from the gear menu, from printing a super bill to moving, canceling, or deleting it, and how to print the whole day sheet.",
+          "wistia": "ytwsqzuky9"
+        }
+      ]
+    },
+    {
+      "id": "billing",
+      "label": "Billing",
+      "items": [
+        {
+          "title": "Billing Dashboard Overview",
+          "tagline": "Learn How to Read KPIs & Clear Your Billing Work",
+          "url": "https://helpcenter.practiceehr.com/billing/billing-dashboard-overview",
+          "updated": "July 29, 2026",
+          "summary": "The billing dashboard is your command center for the practice's revenue, and it's where billing opens. This video walks through the KPI numbers up top, your AR, total charges, average days in AR, and payments received, and the two activity lists below: what the system handles automatically, and the to-do cards that need a person. You'll also learn how clicking a card takes you straight to that work, and how the visuals further down, from aging to claim volume, give you the bigger picture.",
+          "wistia": "62h0wcm602"
+        },
+        {
+          "title": "Reading Billing Analytics",
+          "tagline": "Learn How to Read Your Practice's Full Financial Picture",
+          "url": "https://helpcenter.practiceehr.com/billing/reading-billing-analytics",
+          "updated": "July 29, 2026",
+          "summary": "Behind the billing dashboard sits analytics, where the numbers come together into a clear financial picture. This video covers the report selector and filters up top, then tours the tabs: the KPI scorecard with its benchmarks, trends year over year, monthly financial activity, and the deeper financial metrics. You'll also see how the AR, aging, denials, follow-up, and payment tabs break your revenue down, so you can tell exactly where money is and why it's held up.",
+          "wistia": "damebq4gas"
+        },
+        {
+          "title": "Using Chart Listing to Work Your Charges",
+          "tagline": "Learn How to Search Charges & Manage Accounts",
+          "url": "https://helpcenter.practiceehr.com/billing/using-chart-listing-to-work-your-charges",
+          "updated": "July 29, 2026",
+          "summary": "Every charge you post lands in the charge listing, ready to search and act on. This video covers finding charges by date, CPT, or the full advanced-search filters, then reading each row's plan and patient balances so you know exactly who owes what. You'll also see how to drill into a charge or visit, take a payment, and open the follow-up window to set a reason, an auto action, and a tickle date on an account.",
+          "wistia": "aihu2rl2rp"
+        },
+        {
+          "title": "Edit & Clean Up Claims Before They Go Out",
+          "tagline": "Learn How to Edit, Fix & Ready Claims for Submission",
+          "url": "https://helpcenter.practiceehr.com/billing/edit-and-clean-up-claims-before-they-go-out",
+          "updated": "July 29, 2026",
+          "summary": "Claim editing is where you clean up claims and get them out right the first time, with the AI claim editor helping you catch what's wrong. This video walks through the snapshot up top, the claim grid with its warnings and errors, and the actions, from running eligibility and the scrubber to marking clean claims ready to submit. You'll also learn to open a claim and work it tab by tab, right down to the HCFA boxes and the AI's color-coded findings, so you know exactly what to fix.",
+          "wistia": "uad12r4dsf"
+        },
+        {
+          "title": "Submit & Track Your Claims",
+          "tagline": "Learn How to Send Claims & Set Auto Submission",
+          "url": "https://helpcenter.practiceehr.com/billing/submit-and-track-your-claims",
+          "updated": "July 29, 2026",
+          "summary": "Claim submission is where your claims actually go out, sorted across three tabs for ready, queued, and paper claims. This video walks through the totals up top, the validation column that flags anything holding a claim back, and the actions: submit selected, submit all, or exclude a claim you want to keep back. You'll also learn how auto submission sends claims on a schedule when you switch it on, and how to open a claim's details before sending it.",
+          "wistia": "nkeme7cgxq"
+        },
+        {
+          "title": "Collect & Post Your Payments",
+          "tagline": "Learn How to Post, Record & Reconcile Payments",
+          "url": "https://helpcenter.practiceehr.com/billing/collect-and-post-your-payments",
+          "updated": "July 29, 2026",
+          "summary": "The payment screen is where you post money from both insurance plans and patients, across three tabs. This video walks through plan payment, from looking up a charge to entering the paid and allowed amounts, write-offs, and secondary details, then applying the payment or a denial. You'll also learn how patient payment works the same way, including card handling and advance balances, and how payment batches let you group and reconcile everything.",
+          "wistia": "6r09rrsezo"
+        },
+        {
+          "title": "Handle Your Plan A/R Follow-Up",
+          "tagline": "Learn How to Track & Work Outstanding Insurance A/R",
+          "url": "https://helpcenter.practiceehr.com/billing/handle-your-plan-ar-follow-up",
+          "updated": "July 29, 2026",
+          "summary": "Plan A/R is your worklist for chasing what insurance still owes. This video walks through the snapshot up top, filtering the list by reason, group, or advanced search, and acting on a claim right from the grid with the auto action dropdown. You'll also learn to open a claim's follow-up window, set the reason, group, and a tickle date, log your calls, and save your work as you move through each account.",
+          "wistia": "5o6e4x9tfl"
+        },
+        {
+          "title": "Manage Patient Balances & Statements",
+          "tagline": "Learn How to Work Patient A/R & Send Statements",
+          "url": "https://helpcenter.practiceehr.com/billing/manage-patient-balances-and-statements",
+          "updated": "July 29, 2026",
+          "summary": "Patient A/R is where you chase what patients still owe, with two tabs for the accounts and the statements that collect on them. This video walks through the patient A/R snapshot, filtering the worklist, and working on an account through the same follow-up window as plan A/R, scoped to the patient's balance. You'll also learn how patient statements work, from reading each one's balance and overdue level to setting it reviewed, submitting it, or turning on auto submission.",
+          "wistia": "y9tc0r1k1f"
+        },
+        {
+          "title": "Closing the Day With EOD",
+          "tagline": "Learn How to Run End of Day & Review Past Closes",
+          "url": "https://helpcenter.practiceehr.com/billing/closing-the-day-with-eod",
+          "updated": "July 29, 2026",
+          "summary": "End of Day locks in the day's activity for each location, and this video shows you how it works across its two tabs. It walks through running the close on the batch EOD tab, from picking your locations to entering the date, plus the auto EOD toggle that runs it for you, so it's never missed. You'll also learn how the history tab keeps a record of every close, and how to open any one for the full breakdown, right down to what came in by cash, check, and credit.",
+          "wistia": "ohgr92pxdy"
+        }
+      ]
+    },
+    {
+      "id": "reports",
+      "label": "Reports",
+      "items": [
+        {
+          "title": "Getting Started with Reports",
+          "tagline": "Learn How Reports Are Organized & How to Run One",
+          "url": "https://helpcenter.practiceehr.com/reports/getting-started-with-reports",
+          "updated": "July 29, 2026",
+          "summary": "The reports tab organizes everything down the left, and this video gets you oriented so you can find and run any report you need. It walks through the general, clinical, and billing folders, opening one to see the reports inside, and how every report runs the same way, set the filters, then search. You'll also learn how to reset your filters, export results to Excel, and where the custom reports button lives for building your own.",
+          "wistia": "zk54es48zi"
+        },
+        {
+          "title": "Everyday Reports in the General Folder",
+          "tagline": "Learn What Each General Report Is For",
+          "url": "https://helpcenter.practiceehr.com/reports/everyday-reports-in-the-general-folder",
+          "updated": "July 29, 2026",
+          "summary": "The general folder holds your everyday, non-clinical reports about patients, communications, and payments. This video walks through what each one is for and the key things to filter by, from the patient contact list and message reports to the fax logs with the AI Fax feature. You'll also learn about the payment and inventory reports, and how every report here exports to Excel when you need the data outside the system.",
+          "wistia": "dr0l2rxro9"
+        },
+        {
+          "title": "Clinical, Quality & Lab Reports",
+          "tagline": "Learn What Each Clinical Report Covers",
+          "url": "https://helpcenter.practiceehr.com/reports/clinical-quality-and-lab-reports",
+          "updated": "July 29, 2026",
+          "summary": "The clinical folder holds everything about patient care, from quality measures and immunizations to prescribing and labs. This video walks through what each report is for, including the MIPS folder for your quality reporting, the immunization and medication logs, and the powerful patient list for building specific populations. You'll also learn about the EPCS compliance logs, the decision-support reports, and the lab order report, and how any of them export when you need the data outside the system.",
+          "wistia": "mp6mljgtl7"
+        },
+        {
+          "title": "Billing, A/R & Payment Reports",
+          "tagline": "Learn Where Your Financial Reporting Lives",
+          "url": "https://helpcenter.practiceehr.com/reports/billing-ar-and-payment-reports",
+          "updated": "July 29, 2026",
+          "summary": "The billing reports cover the money side of the practice, split into patient, plan, charges payment, and follow-up. This video runs through each report and its purpose, from the patient and plan aging buckets to the charge list, ledger, fee audit, and revenue analysis. You'll also see the before-EOD and EOD summaries, and the follow-up report that shows exactly why balances are still outstanding.",
+          "wistia": "kiyyv300a7"
+        },
+        {
+          "title": "How to Create Custom Reports in PracticeEHR?",
+          "tagline": "Learn How to Create Your Own Report from Scratch",
+          "url": "https://helpcenter.practiceehr.com/reports/how-to-create-custom-reports-in-practiceehr",
+          "updated": "July 29, 2026",
+          "summary": "When the built-in reports don't cover what you need, the report builder lets you create your own, no support ticket required. This video walks through the custom reports page, where your saved reports live, then the five-step builder: pick a report type, name it, choose your filters, design the layout, and preview. You'll also learn how to save a finished report as a card you can run again anytime, or update whenever things change.",
+          "wistia": "cj254g5dwl"
+        }
+      ]
+    },
+    {
+      "id": "setup",
+      "label": "Setup (admins)",
+      "items": [
+        {
+          "title": "Setting Client Info, Users & Menu Roles",
+          "tagline": "Learn How to Manage Your Account & User Access",
+          "url": "https://helpcenter.practiceehr.com/setup/setting-client-info-users-menu-roles",
+          "updated": "July 29, 2026",
+          "summary": "This covers the first part of the administration setup: your company info, your users, and the roles that control what they can access. The video walks through client info, where your practice account and billing details live, then the user tab, where you create logins and assign each one a required menu role. You'll also learn how menu roles are built, with menu privileges controlling what a user can see and button privileges controlling what they can do.",
+          "wistia": "pzg497ydcw"
+        },
+        {
+          "title": "Practice, Providers, Locations & Audit Log",
+          "tagline": "Learn How to Configure Your Practice & Its Data",
+          "url": "https://helpcenter.practiceehr.com/setup/practice-providers-locations-and-audit-log",
+          "updated": "July 29, 2026",
+          "summary": "This covers the rest of administration: your practice setup, the audit log, and importing data. The video walks through the practice screen, where your core details, claim identifiers, and logo live, along with the settings for reminders, e-statements, and labs, then the three tabs for providers, resources, and locations. You'll also learn about the audit log, your record of logins and changes, and the import data screen for bringing outside files into the system.",
+          "wistia": "u6h6v85kel"
+        },
+        {
+          "title": "Billing Setup: Codes, Fees & Plans",
+          "tagline": "Learn How to Set Up the Codes, Fees & Plans Behind Billing",
+          "url": "https://helpcenter.practiceehr.com/setup/billing-setup-codes-fees-and-plans",
+          "updated": "July 29, 2026",
+          "summary": "The billing folder in setup holds the codes, fees, and plans that drive your billing, and this video walks through each screen. It covers your CPT and fee master list, the fee schedules built from plan fee links and plan fees, and the insurance plans where each payer's billing behavior is defined. You'll also learn about EDI enrollments for tracking electronic setup with payers, and the denial codes that turn cryptic remark codes into follow-up reasons your team can act on.",
+          "wistia": "10975kkafa"
+        },
+        {
+          "title": "Setting Up Templates, Sections, Labs & Procedures",
+          "tagline": "Learn How to Build the Basics for Charting & Orders",
+          "url": "https://helpcenter.practiceehr.com/setup/setting-up-templates-sections-labs-and-procedures",
+          "updated": "July 29, 2026",
+          "summary": "Clinical setup starts with the pieces that make up your notes and orders. This video covers building note templates from reusable sections and your lab library, where single tests and bundled panels are set up for ordering. You'll also see how to add procedures with their CPT codes and maintain the referring provider directory behind your referrals.",
+          "wistia": "5qk0mfp800"
+        },
+        {
+          "title": "Care Plans, Decision Support & Immunizations",
+          "tagline": "Learn How to Set Up Care Management & Clinical Support",
+          "url": "https://helpcenter.practiceehr.com/setup/care-plans-decision-support-and-immunizations",
+          "updated": "July 29, 2026",
+          "summary": "Clinical setup continues with the tools behind care management and clinical decisions. This video covers your standard follow-up instructions, care plan statements, and the patient education material you hand out, organized by condition. You'll also see how to set up evidence-based and predictive decision support, and manage your vaccine library and immunization schedules.",
+          "wistia": "vmpqdzhq9q"
+        },
+        {
+          "title": "Scheduling, Custom Fields & Patient Outreach",
+          "tagline": "Learn How to Set Up Scheduling & Other Options",
+          "url": "https://helpcenter.practiceehr.com/setup/scheduling-custom-fields-and-patient-outreach",
+          "updated": "July 29, 2026",
+          "summary": "The scheduling and other tabs cover the last pieces of setup. This video covers scheduling reasons and their durations, custom fields for tracking your own information, and inventory for keeping tabs on supplies and stock. You'll also see how automation builds your patient outreach, with events, workflows, and groups behind your reminders, confirmations, and follow-up campaigns.",
+          "wistia": "6l43l5uesn"
+        }
+      ]
+    }
+  ],
+  "releases": [
+    {
+      "month": "September 2026",
+      "url": "https://www.practiceehr.com/latest-releases/september-2026",
+      "items": [
+        "Open Visit – Shortcuts in Sentence View",
+        "Open Visit – Plan & Assessment Notes on the New Text Editor",
+        "Clinical Designer – Add and Update Chief Complaints from the Template Builder",
+        "AI Follow-up Workflow Enhancement – Plan A/R and Patient A/R",
+        "Web KIOSK – Patient Self Check-In (New UI)",
+        "AI Scribe – Pre-scribe and Post-scribe",
+        "AI Agent – Outbound Patient Collections",
+        "Messaging – New Create Message Window",
+        "Patient Chart – New Patient Alerts Modal",
+        "AI Scribe – Faster Fill Value"
+      ]
+    },
+    {
+      "month": "August 2026",
+      "url": "https://www.practiceehr.com/latest-releases/august-2026",
+      "items": [
+        "Patient Eligibility – Eligibility Response Enhancements",
+        "No Show Status – Patients in Office & Televisit Waiting Room",
+        "Patients in Office – Room Column",
+        "Unified Patient Payment Window",
+        "Create Visit / Encounter – Updated Workflow",
+        "AI Inbound Payment Call Agent",
+        "Group Psych – Group Visit Management",
+        "PracticeEHR – CRM Module",
+        "Letter Builder & Form Builder",
+        "Patient Chart Updates – Add and Update Problem List, History, Vitals & Insurance"
+      ]
+    },
+    {
+      "month": "July 2026",
+      "url": "https://www.practiceehr.com/latest-releases/july-2026",
+      "items": [
+        "Kno2 External Records Retrieval",
+        "AI Inbound Agent – Agent Enhancements",
+        "Zoom Meeting Integration",
+        "Patient Chart – Medication Module Enhancements (New UI)",
+        "AI Scribe – Medication Completion",
+        "Enhanced Outbound Billing Agent Workflow",
+        "AI IVR Claim Status Verification"
+      ]
+    },
+    {
+      "month": "June 2026",
+      "url": "https://www.practiceehr.com/latest-releases/june-2026",
+      "items": [
+        "Patient Portal",
+        "New UI",
+        "Scheduling – New Calendar UI",
+        "AI Inbound Agent Insurance Collection"
+      ]
+    }
+  ],
+  "support": {
+    "helpCenter": "https://helpcenter.practiceehr.com/home",
+    "faqPage": "https://www.practiceehr.com/faqs",
+    "releasesPage": "https://www.practiceehr.com/latest-releases",
+    "webinars": "https://www.practiceehr.com/webinars",
+    "youtube": "https://www.youtube.com/channel/UCETzwTD0BcVEjoJP6eXdHCg",
+    "email": "info@practiceehr.com",
+    "emailNote": "Response within 24 hours",
+    "phone": "(469) 305-7171",
+    "phoneNote": "Mon–Fri, 9am–6pm CT. Client support: ext. 2"
   }
-]
+}

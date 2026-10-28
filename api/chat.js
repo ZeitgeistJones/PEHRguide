@@ -1,10 +1,10 @@
 // PracticeEHR training companion — Gemini proxy
-// Reads public guide text from knowledge.json and answers from that only.
+// Reads guide + official resources from knowledge.json and answers from that only.
 
 const fs = require("fs");
 const path = require("path");
 
-let knowledge = [];
+let knowledge = null;
 try {
   knowledge = JSON.parse(
     fs.readFileSync(path.join(__dirname, "..", "knowledge.json"), "utf8")
@@ -12,6 +12,41 @@ try {
 } catch (err) {
   console.error("Failed to load knowledge.json", err);
 }
+
+function buildContext(k) {
+  const guide = (k.guide || [])
+    .map((s) => {
+      const label = s.source === "official" ? "OFFICIAL" : "TRAINING";
+      const lines = [`[${label}] ${s.title} (${s.timestamp}): ${s.intro}`];
+      (s.steps || []).forEach((v, i) => lines.push(`${i + 1}. ${v}`));
+      (s.tips || []).forEach((t) => lines.push(`Tip: ${t}`));
+      if (s.video) lines.push(`Video: ${s.video.title} — ${s.video.url}`);
+      (s.links || []).forEach((l) => lines.push(`Link: ${l.label} — ${l.url}`));
+      return lines.join("\n");
+    })
+    .join("\n\n");
+
+  const faqs = (k.faqs || []).map((f) => `Q: ${f.q}\nA: ${f.a}`).join("\n\n");
+
+  const videos = (k.videos || [])
+    .map(
+      (g) =>
+        `${g.label}:\n` +
+        g.items.map((v) => `- ${v.title} (updated ${v.updated}) — ${v.url}\n  ${v.summary}`).join("\n")
+    )
+    .join("\n\n");
+
+  const releases = (k.releases || [])
+    .map((r) => `${r.month} (${r.url}): ${r.items.join("; ")}`)
+    .join("\n");
+
+  const s = k.support || {};
+  const support = `Phone ${s.phone} (${s.phoneNote}). Email ${s.email} (${s.emailNote}). Help Center ${s.helpCenter}. FAQ ${s.faqPage}.`;
+
+  return `GUIDE:\n${guide}\n\nOFFICIAL FAQ:\n${faqs}\n\nOFFICIAL HELP VIDEOS:\n${videos}\n\nRECENT RELEASES:\n${releases}\n\nSUPPORT:\n${support}`;
+}
+
+const ctx = knowledge && Array.isArray(knowledge.guide) ? buildContext(knowledge) : "";
 
 function extractAnswer(data) {
   const parts = data?.candidates?.[0]?.content?.parts;
@@ -34,7 +69,7 @@ module.exports = async function handler(req, res) {
     return res.status(503).json({ error: "AI assistant not configured" });
   }
 
-  if (!Array.isArray(knowledge) || knowledge.length === 0) {
+  if (!ctx) {
     return res.status(500).json({ error: "Training guide unavailable" });
   }
 
@@ -51,17 +86,8 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "Do not include patient information" });
   }
 
-  const ctx = knowledge
-    .map(
-      (s) =>
-        `${s.title} (${s.timestamp}): ${s.intro}\n${s.steps
-          .map((v, i) => `${i + 1}. ${v}`)
-          .join("\n")}`
-    )
-    .join("\n\n");
-
   const prompt =
-    "You are a friendly PracticeEHR training companion. Answer ONLY from the supplied training guide below, not from assumptions about actual UI buttons. Be concise, actionable, numbered steps (usually 2-5). Use plain text, no markdown formatting. If guide does not establish a step, clearly say it is not confirmed and advise checking with a trainer or practice admin. Never diagnose or give medical advice. Do not ask for or accept any patient-identifiable information. Never imply you can see the user's account, recording, screen, or chart. No external links unless already in guide.\n\nGUIDE:\n" +
+    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, and support contacts. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material.\n\n" +
     ctx;
 
   const previous = Array.isArray(history)
@@ -72,7 +98,7 @@ module.exports = async function handler(req, res) {
             x &&
             ["user", "assistant"].includes(x.role) &&
             typeof x.content === "string" &&
-            x.content.length < 1300
+            x.content.length < 2000
         )
         .map((x) => ({
           role: x.role === "assistant" ? "model" : "user",
@@ -95,7 +121,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: prompt }] },
         contents: [...previous, { role: "user", parts: [{ text: message }] }],
-        generationConfig: { maxOutputTokens: 1024 }
+        generationConfig: { maxOutputTokens: 1200 }
       })
     });
 

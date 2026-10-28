@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="PracticeEHR training guide and AI helper based on October 23, 2026 staff training.">
+<meta name="description" content="PracticeEHR training guide, telehealth walkthrough, official help videos, FAQs, and AI helper.">
 <title>PracticeEHR | Training Companion</title>
 <style>
 :root{--bg:#f4f7fb;--surface:#fff;--nav:#15283e;--accent:#3165ad;--border:#dbe4ed;--text:#1a2d43;--muted:#52657a}
@@ -15,27 +15,55 @@ a{color:var(--accent)}
 .sidebar{position:fixed;inset:0 auto 0 0;width:265px;background:var(--nav);color:#f5f8ff;padding:22px 16px;overflow:auto}
 .sidebar h1{font-size:20px;margin:0 0 6px}
 .sidebar p{font-size:12px;color:#b9cbdc;margin:0 0 18px}
-.sidebar a{display:block;padding:10px 11px;border-radius:9px;color:#deebfb;text-decoration:none;font-size:14px}
+.sidebar a{display:block;padding:8px 11px;border-radius:9px;color:#deebfb;text-decoration:none;font-size:14px}
 .sidebar a:hover,.sidebar a:focus{background:#34506d}
 .sidebar input{width:100%;padding:11px;border:1px solid #66809d;border-radius:9px;margin-bottom:15px}
+.nav-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8fa8c2;margin:16px 11px 4px;font-weight:700}
 .content{max-width:1160px;margin-left:265px;padding:35px 38px 110px}
 .hero{background:linear-gradient(110deg,#eaf2fd,#fff);border:1px solid #d6e5f7;border-radius:18px;padding:28px;margin-bottom:20px}
 .hero h2{font-size:32px;line-height:1.2;margin:3px 0 8px}
 .hero p{color:var(--muted);max-width:780px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-.btn{border:1px solid #bfd0e3;border-radius:10px;padding:10px 15px;background:#fff;color:#204c82;cursor:pointer}
+.btn{border:1px solid #bfd0e3;border-radius:10px;padding:10px 15px;background:#fff;color:#204c82;cursor:pointer;text-decoration:none;display:inline-block}
 .btn.primary{color:#fff;background:var(--accent);border-color:var(--accent)}
+.btn.small{padding:6px 11px;font-size:13px;border-radius:8px}
 .alert{padding:14px 18px;background:#fff8e6;border-left:4px solid #d7a84e;margin:18px 0;border-radius:8px}
+.block{margin-top:38px;scroll-margin-top:16px}
+.block>h2{font-size:24px;margin:0 0 4px}
+.block>.lead{color:var(--muted);margin:0 0 16px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
 .card{background:var(--surface);border:1px solid var(--border);padding:23px;border-radius:15px;scroll-margin-top:16px;box-shadow:0 2px 8px #142c4510}
+.card.featured{border-color:#9fc0ea;box-shadow:0 4px 16px #3165ad22}
 .card h3{font-size:21px;margin:4px 0 7px}
 .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:#57789d;font-weight:700}
+.badge{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;margin-left:6px;vertical-align:middle;letter-spacing:0;text-transform:none}
+.badge.training{background:#eef2f7;color:#4d6178}
+.badge.official{background:#e3f4ea;color:#21704a}
 .subtitle{margin:0;color:var(--muted)}
 .steps{padding:0;list-style:none;margin:20px 0 0;counter-reset:step}
 .steps li{display:flex;gap:12px;padding:12px 0;border-top:1px solid #edf0f4}
 .steps li::before{counter-increment:step;content:counter(step);flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e5efff;color:#28599b;font-size:13px;font-weight:700}
-.timestamp{color:#657a8d;font-size:12px}
+.tips{margin:12px 0 0;padding:12px 14px 12px 30px;background:#f5f9ff;border-radius:10px;font-size:14px}
+.tips li{margin:3px 0}
+.card-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.card-actions a{font-size:13px}
 .hidden{display:none!important}
+.video-group{margin-bottom:22px}
+.video-group h3{font-size:17px;margin:0 0 10px}
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.video{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.video strong{font-size:15px;line-height:1.35}
+.video .meta{font-size:12px;color:#6b7d90}
+.video .sum{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.video .row{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:6px}
+.faq details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:0 16px;margin-bottom:8px}
+.faq summary{cursor:pointer;padding:13px 0;font-weight:600}
+.faq details p{margin:0 0 14px;color:var(--muted)}
+.release{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.release h3{font-size:17px;margin:0 0 6px}
+.release ul{margin:0;padding-left:20px;font-size:14px}
+.support-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.support-grid .release p{margin:0;font-size:14px;color:var(--muted)}
 .assistant-launch{position:fixed;bottom:18px;right:22px;z-index:10;border-radius:999px;border:0;background:#245eaa;color:white;padding:14px 20px;box-shadow:0 8px 22px #132a4c55;cursor:pointer;font-weight:700}
 .chat{position:fixed;z-index:11;bottom:80px;right:22px;width:min(440px,calc(100vw - 25px));height:min(625px,calc(100vh - 105px));border-radius:18px;box-shadow:0 12px 44px #1122384b;background:#fff;display:flex;flex-direction:column;overflow:hidden;border:1px solid #cbd9e8}
 .chat-header{background:#1b3552;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center}
@@ -50,21 +78,31 @@ a{color:var(--accent)}
 .suggestions{display:flex;flex-wrap:wrap;gap:7px;padding:10px 13px 0}
 .suggestions button{background:#f1f6ff;border:1px solid #ccdcf2;border-radius:99px;padding:6px 10px;color:#294b75;cursor:pointer;font-size:12px}
 .privacy{font-size:11px;color:#66778b;padding:0 13px 10px}
-.footer{font-size:13px;color:#647487;margin-top:30px}
+.modal{position:fixed;inset:0;z-index:20;background:#0b1828cc;display:grid;place-items:center;padding:20px}
+.modal-box{background:#000;border-radius:14px;overflow:hidden;width:min(960px,100%);box-shadow:0 20px 60px #0008}
+.modal-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#15283e;color:#fff;padding:10px 14px;font-size:14px}
+.modal-bar a{color:#cfe0f5}
+.modal-bar button{background:transparent;border:0;color:#fff;font-size:24px;cursor:pointer;line-height:1}
+.ratio{position:relative;padding-top:56.25%}
+.ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.footer{font-size:13px;color:#647487;margin-top:40px}
 .empty{padding:18px}
+@media(max-width:1100px){.video-grid,.support-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:950px){
   .sidebar{position:static;width:auto;max-height:none;padding:14px}
   .sidebar .links{display:flex;overflow:auto;gap:3px}
   .sidebar a{white-space:nowrap}
+  .nav-label{display:none}
   .content{margin:0;padding:18px}
-  .grid{grid-template-columns:1fr}
+  .grid,.video-grid,.support-grid{grid-template-columns:1fr}
   .hero h2{font-size:26px}
 }
 @media print{
-  .sidebar,.assistant-launch,.chat,.hero-actions{display:none!important}
+  .sidebar,.assistant-launch,.chat,.hero-actions,.modal,#videos,.card-actions{display:none!important}
   .content{margin:0;padding:0}
   .grid{display:block}
   .card{break-inside:avoid;box-shadow:none;margin-bottom:10px}
+  .faq details{break-inside:avoid}
   .hero{padding:10px}
 }
 </style>
@@ -72,20 +110,30 @@ a{color:var(--accent)}
 <body>
 <aside class="sidebar">
   <h1>PracticeEHR Companion</h1>
-  <p>Training guide + AI help</p>
-  <input id="search" placeholder="Search steps or topics…" aria-label="Search training topics">
-  <div class="links" id="links"></div>
+  <p>Training guide + official resources + AI help</p>
+  <input id="search" placeholder="Search guide, videos, FAQs…" aria-label="Search everything">
+  <div class="links">
+    <div class="nav-label">Guide</div>
+    <div id="guideLinks" style="display:contents"></div>
+    <div class="nav-label">Resources</div>
+    <a href="#videos">Help videos</a>
+    <a href="#faq">FAQ</a>
+    <a href="#whats-new">What's new</a>
+    <a href="#support">Support &amp; contacts</a>
+  </div>
 </aside>
 
 <main class="content">
   <div class="hero">
-    <div class="eyebrow">October 23, 2026 training</div>
+    <div class="eyebrow">October 23, 2026 training + official PracticeEHR resources</div>
     <h2>PracticeEHR, explained step by step</h2>
-    <p>Find a patient, open a visit, work with AI Scribe, and review notes. Use the topic menu, search, or ask the assistant for a simple walkthrough.</p>
+    <p>Find a patient, open a visit, run a TeleVisit, work with AI Scribe, and review notes. Use the menu, search, the official help videos, or ask the assistant for a simple walkthrough.</p>
     <div class="hero-actions">
       <button class="btn primary" id="askHero">Ask the AI helper</button>
+      <a class="btn" href="#telehealth">Telehealth</a>
+      <a class="btn" href="#videos">Help videos</a>
       <button class="btn" onclick="window.print()">Print guide</button>
-      <button class="btn" id="clearSearch">Show all topics</button>
+      <button class="btn hidden" id="clearSearch">Clear search</button>
     </div>
   </div>
 
@@ -93,9 +141,39 @@ a{color:var(--accent)}
     <strong>Privacy:</strong> This public-share version deliberately contains no patient screenshots, recordings, or identifiable patient data. Never enter patient names, DOBs, chart details, or other protected health information into the helper. Answers are educational; review all clinical documentation before saving or signing.
   </div>
 
-  <div id="cards" class="grid"></div>
-  <div id="noResults" class="empty hidden">No matching topics. Try “scribe”, “visit”, “Sentence View”, or ask the assistant.</div>
-  <p class="footer">Based on screenshots sampled from the ~59-minute staff training recording. Timing is approximate. Exact UI labels and behavior can vary by practice settings. This is not affiliated with PracticeEHR.</p>
+  <section class="block" id="guide">
+    <h2>Step-by-step guide</h2>
+    <p class="lead">Sections marked <span class="badge training">From training</span> come from the October 23 recording. <span class="badge official">Official</span> sections use PracticeEHR's Help Center and release notes.</p>
+    <div id="cards" class="grid"></div>
+  </section>
+
+  <section class="block" id="videos">
+    <h2>Official help videos</h2>
+    <p class="lead">Every current walkthrough from the PracticeEHR Help Center. Click Watch to play it here, or open it on the Help Center.</p>
+    <div id="videoGroups"></div>
+  </section>
+
+  <section class="block faq" id="faq">
+    <h2>FAQ</h2>
+    <p class="lead">Staff-relevant answers from PracticeEHR's official FAQ. <a id="faqLink" target="_blank" rel="noopener">See the full FAQ</a></p>
+    <div id="faqList"></div>
+  </section>
+
+  <section class="block" id="whats-new">
+    <h2>What's new in PracticeEHR</h2>
+    <p class="lead">Recent official releases. Your screen may look different from the training if your account has these updates. <a id="releasesLink" target="_blank" rel="noopener">All release notes</a></p>
+    <div id="releaseList" class="grid"></div>
+  </section>
+
+  <section class="block" id="support">
+    <h2>Support &amp; contacts</h2>
+    <p class="lead">For anything this guide doesn't cover, reach PracticeEHR support or your practice admin.</p>
+    <div id="supportList" class="support-grid"></div>
+  </section>
+
+  <div id="noResults" class="empty hidden">No matches. Try “televisit”, “scribe”, “Sentence View”, “billing”, or ask the assistant.</div>
+  <div id="loadError" class="alert hidden">The guide content could not load. Refresh the page to try again.</div>
+  <p class="footer">Training sections are based on screenshots sampled from the ~59-minute staff training recording; timing is approximate. Official sections, videos, and FAQs come from practiceehr.com and helpcenter.practiceehr.com (<span id="updatedOn"></span>). Exact UI labels and behavior can vary by practice settings. This site is not affiliated with PracticeEHR.</p>
 </main>
 
 <button class="assistant-launch" id="toggleChat" aria-expanded="false">✦ Ask PracticeEHR helper</button>
@@ -104,189 +182,194 @@ a{color:var(--accent)}
   <div class="chat-header">
     <div>
       <strong>PracticeEHR AI helper</strong>
-      <div style="font-size:12px;opacity:.82">Answers based on this training guide</div>
+      <div style="font-size:12px;opacity:.82">Answers from this guide and official resources</div>
     </div>
     <button id="closeChat" aria-label="Close chat">×</button>
   </div>
   <div class="suggestions" id="suggestions">
     <button type="button" data-q="How do I get Scribe text into individual boxes?">Sentence View → boxes</button>
-    <button type="button" data-q="How do I open a patient visit?">Open a visit</button>
+    <button type="button" data-q="How do I start a TeleVisit?">Start a TeleVisit</button>
     <button type="button" data-q="How do I use AI Scribe?">Use AI Scribe</button>
+    <button type="button" data-q="Is there a video on booking an appointment?">Find a video</button>
   </div>
   <div class="chat-log" id="log" aria-live="polite">
-    <div class="bubble bot">Hi! Ask me how to do something in PracticeEHR. I’ll give you short steps and explain what the training does or doesn’t confirm.</div>
+    <div class="bubble bot">Hi! Ask me how to do something in PracticeEHR. I’ll give you short steps, point you to the right help video, and tell you what the training does or doesn’t confirm.</div>
   </div>
   <form class="chat-form" id="chatForm">
-    <input id="question" maxlength="1200" autocomplete="off" placeholder="e.g., How do I populate HPI?" aria-label="Ask a question" required>
+    <input id="question" maxlength="1200" autocomplete="off" placeholder="e.g., How do I mark a TeleVisit no-show?" aria-label="Ask a question" required>
     <button type="submit">Ask</button>
   </form>
-  <div class="privacy">Do not type patient information. AI answers require a configured server API; otherwise the helper searches the guide locally.</div>
+  <div class="privacy">Do not type patient information. If the AI is unavailable, the helper searches the guide locally.</div>
 </section>
 
+<div class="modal hidden" id="videoModal" role="dialog" aria-modal="true" aria-label="Help video">
+  <div class="modal-box">
+    <div class="modal-bar">
+      <strong id="videoTitle"></strong>
+      <span><a id="videoLink" target="_blank" rel="noopener">Open on Help Center ↗</a></span>
+      <button id="closeVideo" aria-label="Close video">×</button>
+    </div>
+    <div class="ratio"><iframe id="videoFrame" title="Help video" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+  </div>
+</div>
+
 <script>
-const DATA = [
-  {
-    id: "start",
-    title: "Start here",
-    intro: "The daily path is: find your appointment → open the patient chart → enter the visit → document → review → save or finalize.",
-    timestamp: "Recording: ~45:00",
-    steps: [
-      "Open PracticeEHR and check the dashboard for today’s appointments or patient list. Use the date/navigation controls to find the appointment.",
-      "Select the correct patient and confirm the correct chart before documenting. Do not document into a different patient or visit.",
-      "Open the encounter or visit and identify the note sections. The buttons shown may differ by your role and practice permissions."
-    ]
-  },
-  {
-    id: "find",
-    title: "Find a patient / appointment",
-    intro: "Search from the patient list or navigate from the scheduled appointment.",
-    timestamp: "Recording: ~03:00–09:00",
-    steps: [
-      "From the dashboard, open the patient list or schedule. The recording moves between the home dashboard and patient list.",
-      "Use the search or filters to find the correct appointment/patient. Check date, status, and patient details before opening.",
-      "Select the appointment/record to enter the chart. If nothing shows, verify the date and any active filters."
-    ]
-  },
-  {
-    id: "visit",
-    title: "Open a visit",
-    intro: "Open the selected encounter and locate the visit’s documentation sections.",
-    timestamp: "Recording: ~12:00–15:00",
-    steps: [
-      "Choose the intended visit associated with the patient. The recording shows the visit documentation interface.",
-      "Look for section headers and expandable areas. Common examples include HPI, ROS, exam, assessment and plan; exact labels vary.",
-      "Open the relevant section, enter or review the information, then save with the button shown. Do not assume text automatically saves or signs."
-    ]
-  },
-  {
-    id: "scribe-settings",
-    title: "Set up AI Scribe",
-    intro: "The training shows a Scribe configuration screen with section-level switches, including choices for how content is handled.",
-    timestamp: "Recording: ~18:00",
-    steps: [
-      "Inside the visit, open AI Scribe and its settings/configuration area. This is the screen with purple toggles in the recording.",
-      "Review the available documentation sections and their toggles. The example shows sections such as HPI, ROS, History, Assessment and Plan.",
-      "Check the setting for filling or applying information to structured fields before generating a note. The screenshot alone does not establish the exact behavior of every switch. Confirm with your practice admin or a test encounter.",
-      "Save or update the configuration using the on-screen button. Do not change practice-wide defaults without authorization."
-    ]
-  },
-  {
-    id: "scribe-record",
-    title: "Record using AI Scribe",
-    intro: "The training shows the Scribe workspace and generated text.",
-    timestamp: "Recording: ~21:00–24:00",
-    steps: [
-      "Open AI Scribe from the active encounter. Confirm the correct patient and encounter.",
-      "Use the visible recording/transcription controls as demonstrated. Obtain and document any consent required by your practice and applicable law.",
-      "Complete the recording or transcription and generate the note. Allow the system to finish processing.",
-      "Read the generated text carefully before applying it to the clinical record. Correct omissions, incorrect diagnoses, dates, and hallucinated findings."
-    ]
-  },
-  {
-    id: "sentence",
-    title: "Sentence View → individual boxes",
-    intro: "The recording includes the Scribe setup area and structured documentation screen, but it does not clearly prove a one-click automatic transfer from Sentence View to every box.",
-    timestamp: "Recording: ~18:00; 36:00–39:00",
-    steps: [
-      "First, check the AI Scribe section configuration and any “Fill Values” setting. Look for switches affecting HPI, ROS, History, Assessment and Plan.",
-      "Return to the generated note and look for an Apply, Populate, Save, or equivalent control. Only use a control if your interface actually displays it; wording can differ.",
-      "Reopen the structured note sections to see which fields populated. The later portion of the recording displays multiple separate note fields.",
-      "If the boxes are still empty, keep the generated note available and ask your trainer/admin whether your template supports transferring it. Avoid copying content into inappropriate fields, and do not sign an incomplete note."
-    ]
-  },
-  {
-    id: "review",
-    title: "Review the note before finalizing",
-    intro: "A generated note is a draft. Verify accuracy and section placement.",
-    timestamp: "Recording: ~27:00–42:00",
-    steps: [
-      "Check the history, symptoms and patient-reported information. Distinguish patient reports from observed findings.",
-      "Check exam and assessment for unsupported findings or diagnoses. Delete or correct AI-generated inaccuracies.",
-      "Check plan, follow-up, medications and other actions. Make sure decisions match what actually occurred.",
-      "Preview the assembled note if available, and save as draft until ready. Signing/finalizing can lock parts of the chart depending on settings."
-    ]
-  },
-  {
-    id: "other",
-    title: "Other tasks shown",
-    intro: "The recording moves through additional chart sections, forms, preview/print and visit actions.",
-    timestamp: "Recording: ~30:00–58:58",
-    steps: [
-      "Use the top tabs/section selector to move between available visit areas. See the mid-recording navigation around 30–33 minutes.",
-      "Open structured fields and complete only the relevant sections. Around 36–39 minutes the trainer shows grouped form fields.",
-      "Use preview/print only after checking the document. Around 42 minutes the view switches to a document preview.",
-      "If a menu or button is missing, verify permission, visit status and selected chart. Avoid guessing or finalizing an uncertain action."
-    ]
-  },
-  {
-    id: "trouble",
-    title: "Troubleshooting",
-    intro: "Use these checks before repeating work.",
-    timestamp: "Reference / troubleshooting",
-    steps: [
-      "Note stuck in Sentence View? Check Scribe section settings, then whether your template has a separate apply/populate action.",
-      "Patient or visit missing? Check schedule date, filters, search term and assigned provider.",
-      "Visit screen blank/loading? Wait for the current chart to finish, then retry navigation. Do not repeatedly submit/sign.",
-      "Unsure if note saved? Reopen the relevant section and verify persisted text and status."
-    ]
+// ---------- helpers ----------
+function el(tag, props, children) {
+  const n = document.createElement(tag);
+  if (props) {
+    for (const [k, v] of Object.entries(props)) {
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k === "dataset") Object.assign(n.dataset, v);
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    }
   }
-];
-
-const cards = document.getElementById("cards");
-const links = document.getElementById("links");
-const search = document.getElementById("search");
-
-for (const d of DATA) {
-  const a = document.createElement("a");
-  a.href = "#" + d.id;
-  a.textContent = d.title;
-  links.append(a);
-
-  const sec = document.createElement("section");
-  sec.className = "card";
-  sec.id = d.id;
-  sec.dataset.text = JSON.stringify(d).toLowerCase();
-
-  const eye = document.createElement("div");
-  eye.className = "eyebrow";
-  eye.textContent = d.timestamp || "Training guide";
-
-  const h = document.createElement("h3");
-  h.textContent = d.title;
-
-  const p = document.createElement("p");
-  p.className = "subtitle";
-  p.textContent = d.intro;
-
-  const ol = document.createElement("ol");
-  ol.className = "steps";
-  d.steps.forEach((t) => {
-    const li = document.createElement("li");
-    li.textContent = t;
-    ol.append(li);
-  });
-
-  sec.append(eye, h, p, ol);
-  cards.append(sec);
+  for (const c of [].concat(children || [])) if (c) n.append(c);
+  return n;
 }
+
+function extLink(label, url) {
+  return el("a", { href: url, target: "_blank", rel: "noopener", text: label });
+}
+
+// ---------- video modal ----------
+const modal = document.getElementById("videoModal");
+const frame = document.getElementById("videoFrame");
+
+function openVideo(id, title, url) {
+  document.getElementById("videoTitle").textContent = title;
+  document.getElementById("videoLink").href = url;
+  frame.src = "https://fast.wistia.net/embed/iframe/" + encodeURIComponent(id) + "?autoPlay=true&videoFoam=true";
+  modal.classList.remove("hidden");
+}
+
+function closeVideo() {
+  frame.src = "about:blank";
+  modal.classList.add("hidden");
+}
+
+document.getElementById("closeVideo").onclick = closeVideo;
+modal.addEventListener("click", (e) => { if (e.target === modal) closeVideo(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.classList.contains("hidden")) closeVideo(); });
+
+function watchButton(id, title, url) {
+  return el("button", { class: "btn small primary", type: "button", text: "▶ Watch", onclick: () => openVideo(id, title, url) });
+}
+
+// ---------- renderers ----------
+function renderGuide(guide) {
+  const cards = document.getElementById("cards");
+  const links = document.getElementById("guideLinks");
+  for (const d of guide) {
+    links.append(el("a", { href: "#" + d.id, text: d.title }));
+
+    const official = d.source === "official";
+    const eye = el("div", { class: "eyebrow", text: d.timestamp || "Training guide" });
+    eye.append(el("span", { class: "badge " + (official ? "official" : "training"), text: official ? "Official" : "From training" }));
+
+    const ol = el("ol", { class: "steps" }, (d.steps || []).map((t) => el("li", { text: t })));
+    const tips = d.tips && d.tips.length ? el("ul", { class: "tips" }, d.tips.map((t) => el("li", { text: t }))) : null;
+
+    const actions = [];
+    if (d.video) actions.push(watchButton(d.video.id, d.video.title, d.video.url), el("span", { class: "meta", text: d.video.title }));
+    for (const l of d.links || []) actions.push(extLink(l.label + " ↗", l.url));
+    const actionRow = actions.length ? el("div", { class: "card-actions" }, actions) : null;
+
+    const card = el("section", {
+      class: "card searchable" + (d.id === "telehealth" ? " featured" : ""),
+      id: d.id,
+      dataset: { text: JSON.stringify(d).toLowerCase() }
+    }, [eye, el("h3", { text: d.title }), el("p", { class: "subtitle", text: d.intro }), ol, tips, actionRow]);
+    cards.append(card);
+  }
+}
+
+function renderVideos(groups) {
+  const wrap = document.getElementById("videoGroups");
+  for (const g of groups) {
+    const grid = el("div", { class: "video-grid" });
+    for (const v of g.items) {
+      grid.append(el("div", {
+        class: "video searchable",
+        dataset: { text: (g.label + " " + v.title + " " + (v.tagline || "") + " " + v.summary).toLowerCase() }
+      }, [
+        el("strong", { text: v.title }),
+        el("div", { class: "meta", text: (v.tagline ? v.tagline + " · " : "") + "Updated " + v.updated }),
+        el("div", { class: "sum", text: v.summary, title: v.summary }),
+        el("div", { class: "row" }, [watchButton(v.wistia, v.title, v.url), extLink("Help Center ↗", v.url)])
+      ]));
+    }
+    wrap.append(el("div", { class: "video-group searchable-group" }, [el("h3", { text: g.label + " (" + g.items.length + ")" }), grid]));
+  }
+}
+
+function renderFaqs(faqs, support) {
+  const list = document.getElementById("faqList");
+  document.getElementById("faqLink").href = support.faqPage;
+  for (const f of faqs) {
+    list.append(el("details", { class: "searchable", dataset: { text: (f.q + " " + f.a).toLowerCase() } }, [
+      el("summary", { text: f.q }),
+      el("p", { text: f.a })
+    ]));
+  }
+}
+
+function renderReleases(releases, support) {
+  const list = document.getElementById("releaseList");
+  document.getElementById("releasesLink").href = support.releasesPage;
+  for (const r of releases) {
+    list.append(el("div", { class: "release searchable", dataset: { text: (r.month + " " + r.items.join(" ")).toLowerCase() } }, [
+      el("h3", { text: r.month }),
+      el("ul", null, r.items.map((i) => el("li", { text: i }))),
+      el("div", { class: "card-actions" }, [extLink("Read the " + r.month + " notes ↗", r.url)])
+    ]));
+  }
+}
+
+function renderSupport(s) {
+  const list = document.getElementById("supportList");
+  const items = [
+    { h: "Phone", body: [el("a", { href: "tel:+14693057171", text: s.phone }), el("p", { text: s.phoneNote })] },
+    { h: "Email", body: [el("a", { href: "mailto:" + s.email, text: s.email }), el("p", { text: s.emailNote })] },
+    { h: "Help Center", body: [extLink("helpcenter.practiceehr.com ↗", s.helpCenter), el("p", { text: "Guides and video walkthroughs" })] },
+    { h: "FAQ", body: [extLink("practiceehr.com/faqs ↗", s.faqPage), el("p", { text: "Full official FAQ" })] },
+    { h: "Webinars", body: [extLink("practiceehr.com/webinars ↗", s.webinars), el("p", { text: "Live and recorded sessions" })] },
+    { h: "YouTube", body: [extLink("PracticeEHR channel ↗", s.youtube), el("p", { text: "More product videos" })] }
+  ];
+  for (const i of items) {
+    list.append(el("div", { class: "release searchable", dataset: { text: (i.h + " " + i.body.map((b) => b.textContent).join(" ")).toLowerCase() } }, [el("h3", { text: i.h })].concat(i.body)));
+  }
+}
+
+// ---------- search ----------
+const search = document.getElementById("search");
+const clearBtn = document.getElementById("clearSearch");
 
 function filter() {
   const q = search.value.toLowerCase().trim();
-  let n = 0;
-  for (const c of cards.children) {
-    const ok = !q || c.dataset.text.includes(q);
-    c.classList.toggle("hidden", !ok);
-    if (ok) n++;
+  let total = 0;
+  for (const n of document.querySelectorAll(".searchable")) {
+    const ok = !q || n.dataset.text.includes(q);
+    n.classList.toggle("hidden", !ok);
+    if (ok) total++;
+    if (ok && q && n.tagName === "DETAILS") n.open = true;
   }
-  document.getElementById("noResults").classList.toggle("hidden", n !== 0);
+  for (const g of document.querySelectorAll(".searchable-group")) {
+    g.classList.toggle("hidden", !g.querySelector(".searchable:not(.hidden)"));
+  }
+  for (const b of document.querySelectorAll(".block")) {
+    b.classList.toggle("hidden", !!q && !b.querySelector(".searchable:not(.hidden)"));
+  }
+  document.getElementById("noResults").classList.toggle("hidden", total !== 0);
+  clearBtn.classList.toggle("hidden", !q);
 }
 
 search.addEventListener("input", filter);
-document.getElementById("clearSearch").onclick = () => {
-  search.value = "";
-  filter();
-};
+clearBtn.onclick = () => { search.value = ""; filter(); };
 
+// ---------- chat ----------
 const chat = document.getElementById("chat");
 const toggle = document.getElementById("toggleChat");
 const question = document.getElementById("question");
@@ -303,46 +386,48 @@ document.getElementById("closeChat").onclick = () => showChat(false);
 document.getElementById("askHero").onclick = () => showChat(true);
 
 function bubble(text, who) {
-  const b = document.createElement("div");
-  b.className = "bubble " + who;
-  b.textContent = text;
+  const b = el("div", { class: "bubble " + who, text });
   log.append(b);
   log.scrollTop = log.scrollHeight;
   return b;
 }
 
 const STOP = new Set(
-  "how do i the a an to of on in with can you my is it and for from what where please that does are into after step get help".split(" ")
+  "how do i the a an to of on in with can you my is it and for from what where please that does are into after step get help there video".split(" ")
 );
+let DOCS = [];
+
+function buildDocs(k) {
+  const docs = [];
+  for (const d of k.guide) {
+    docs.push({
+      head: d.title,
+      body: d.intro + " " + d.steps.join(" ") + " " + (d.tips || []).join(" "),
+      answer: () => d.title + "\n" + d.steps.map((s, i) => i + 1 + ". " + s).join("\n") + "\n\nGuide section: " + d.title + " (see the menu)." + (d.video ? "\nVideo: " + d.video.title + " — " + d.video.url : "")
+    });
+  }
+  for (const f of k.faqs) docs.push({ head: f.q, body: f.a, answer: () => f.q + "\n" + f.a });
+  for (const g of k.videos) {
+    for (const v of g.items) {
+      docs.push({ head: v.title, body: g.label + " " + (v.tagline || "") + " " + v.summary, answer: () => "Help video: " + v.title + "\n" + v.summary + "\n\nWatch: " + v.url });
+    }
+  }
+  return docs;
+}
 
 function localAnswer(q) {
-  const toks = q
-    .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter((w) => w.length > 2 && !STOP.has(w));
-
-  const scored = DATA.map((d) => {
-    const head = d.title.toLowerCase();
-    const body = (d.intro + " " + d.steps.join(" ")).toLowerCase();
-    return {
-      d,
-      s: toks.reduce((n, t) => n + (head.includes(t) ? 6 : 0) + (body.includes(t) ? 1 : 0), 0)
-    };
+  const toks = q.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w));
+  const scored = DOCS.map((d) => {
+    const head = d.head.toLowerCase();
+    const body = d.body.toLowerCase();
+    return { d, s: toks.reduce((n, t) => n + (head.includes(t) ? 6 : 0) + (body.includes(t) ? 1 : 0), 0) };
   }).sort((a, b) => b.s - a.s);
 
   const best = scored[0];
   if (!best || best.s === 0) {
-    return "I couldn’t find that in the training guide. Try asking about opening a visit, AI Scribe settings, Sentence View, or note review. For unconfirmed features, ask your PracticeEHR administrator.";
+    return "I couldn’t find that in the guide. Try asking about TeleVisit, opening a visit, AI Scribe, Sentence View, or a help video topic. For anything else, contact PracticeEHR support (see Support & contacts).";
   }
-
-  return (
-    best.d.title +
-    "\n" +
-    best.d.steps.map((s, i) => i + 1 + ". " + s).join("\n") +
-    "\n\nGuide section: " +
-    best.d.title +
-    " (see the navigation menu).\n\nNote: This is a guide lookup, not a live AI response."
-  );
+  return best.d.answer() + "\n\nNote: This is a guide lookup, not a live AI response.";
 }
 
 const PHI_RE = /\b(?:ssn|social security|date of birth|dob|mrn|medical record number)\b/i;
@@ -368,15 +453,13 @@ async function submit(q) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ message: q, history: previous })
     });
-    if (!res.ok) throw new Error("Assistant not configured");
+    if (!res.ok) throw new Error("Assistant unavailable");
     const data = await res.json();
     if (!data.answer) throw new Error("Empty response");
     pending.textContent = data.answer;
     history.push({ role: "user", content: q }, { role: "assistant", content: data.answer });
   } catch (e) {
-    pending.textContent =
-      localAnswer(q) +
-      "\n\n(The AI helper is unavailable right now, so this answer comes from the built-in guide.)";
+    pending.textContent = localAnswer(q) + "\n\n(The AI helper is unavailable right now, so this answer comes from the built-in guide.)";
   }
 }
 
@@ -391,6 +474,32 @@ document.querySelectorAll("[data-q]").forEach((b) => {
     submit(b.dataset.q);
   };
 });
+
+// ---------- boot ----------
+(async function init() {
+  try {
+    const res = await fetch("/knowledge.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const k = await res.json();
+    if (!k || !Array.isArray(k.guide)) throw new Error("Bad knowledge.json shape");
+
+    renderGuide(k.guide);
+    renderVideos(k.videos || []);
+    renderFaqs(k.faqs || [], k.support || {});
+    renderReleases(k.releases || [], k.support || {});
+    renderSupport(k.support || {});
+    document.getElementById("updatedOn").textContent = "last checked " + (k.updated || "recently");
+    DOCS = buildDocs(k);
+
+    if (location.hash) {
+      const target = document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView();
+    }
+  } catch (err) {
+    console.error("Failed to load knowledge.json", err);
+    document.getElementById("loadError").classList.remove("hidden");
+  }
+})();
 </script>
 </body>
 </html>

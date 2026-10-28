@@ -54,6 +54,7 @@
         "Bill the TeleVisit through the normal billing workflow, just like an in-person encounter."
       ],
       "tips": [
+        "From the training (~15:36): before a TeleVisit, open AI Scribe (purple mic in the HPI section) and turn on Speaker Recognition. It helps the AI understand the patient over a speakerphone.",
         "Follow your practice's telehealth consent policy, and confirm you have the right patient before starting.",
         "If your practice uses the Zoom integration (July 2026), you can start Zoom meetings from PracticeEHR, email invites, add multiple participants, and use Reconnect to rejoin without a new session.",
         "Group sessions show a small group icon next to the patient's name in the Televisit Waiting Room."

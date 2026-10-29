@@ -80,6 +80,30 @@
       ]
     },
     {
+      "id": "telehealth-safety",
+      "title": "Telebehavioral health: emergency plan",
+      "source": "reference",
+      "intro": "HHS recommends making a plan before the first telebehavioral health visit in case a patient is in crisis. Document it in the patient's record.",
+      "timestamp": "HHS Telehealth.gov best-practice guide",
+      "steps": [
+        "Confirm the patient's location: the address where they are at the time of the visit.",
+        "Record the emergency numbers near the patient: police, fire, mobile crisis unit, and the nearest urgent care or ER. 911 only reaches local services if you're in the same place as the patient.",
+        "Get a local emergency contact (a nearby family member, friend, or neighbor) and the patient's authorization to contact them if needed.",
+        "Get contact information for the patient's other providers, and confirm you'll contact them only with permission or in an emergency.",
+        "Agree on what happens if the video or audio drops during a crisis. If you believe the patient is in crisis, notify their emergency contact."
+      ],
+      "tips": [
+        "Encourage the patient to write down national or local crisis lines.",
+        "Follow your practice's own crisis and consent policies. This is general guidance, not legal advice."
+      ],
+      "links": [
+        {
+          "label": "HHS: Creating an emergency plan for telebehavioral health",
+          "url": "https://telehealth.hhs.gov/providers/best-practice-guides/telehealth-for-behavioral-health/preparing-patients-for-telebehavioral-health/creating-a-telehealth-emergency-plan"
+        }
+      ]
+    },
+    {
       "id": "scribe-settings",
       "title": "Set up AI Scribe",
       "intro": "The training shows a Scribe configuration screen with section-level switches, including choices for how content is handled.",
@@ -244,6 +268,22 @@
     {
       "q": "Is PracticeEHR ONC-certified?",
       "a": "Yes. It is ONC-certified Health IT (supports Promoting Interoperability and MIPS reporting), Surescripts certified, and SOC 2 attested."
+    },
+    {
+      "q": "What devices does the kiosk run on?",
+      "a": "The PracticeEHR Kiosk app runs on iPads, with no extra hardware needed. There is also a Web KIOSK, and patients can check in from their own phone using a web check-in link."
+    },
+    {
+      "q": "Can we customize the kiosk intake forms?",
+      "a": "Yes. Intake forms can be tailored to your specialty and workflow (Setup > Clinical > Letters / Form Builder), and patients fill them out on the kiosk during check-in."
+    },
+    {
+      "q": "Can patients pay at the kiosk?",
+      "a": "Yes. Patients can pay copays or balances by card at check-in (Pay Now), or choose Pay Later and settle at the front desk."
+    },
+    {
+      "q": "Is the kiosk HIPAA compliant?",
+      "a": "Yes. The kiosk is HIPAA compliant and SOC 2 attested. Scanned documents and payments are encrypted and stored in the cloud."
     }
   ],
   "videos": [
@@ -281,7 +321,8 @@
           "url": "https://helpcenter.practiceehr.com/home/managing-televisit-waiting-room",
           "updated": "July 27, 2026",
           "summary": "The Televisit Waiting Room is where your virtual patients wait, each one listed with their check-in time, status, reason, provider, and copay. This video covers the verification step first, since an appointment has to be verified before the visit can begin. You'll see how to open it, fill in the details, and confirm. You'll also learn to read the status, yellow while it's pending and green once it's ready, and the different ways to jump into the session when your patient is waiting.",
-          "wistia": "oct930cso4"
+          "wistia": "oct930cso4",
+          "starter": true
         },
         {
           "title": "Tracking Unfinished Visit Notes",
@@ -289,7 +330,8 @@
           "url": "https://helpcenter.practiceehr.com/home/tracking-unfinished-visit-notes",
           "updated": "July 27, 2026",
           "summary": "Notes In Progress keeps track of every visit note that's been started but not yet finished, with a count on the menu showing how many are open. This video walks through the provider and location filters, so a provider can pull up just their own notes, and shows what each row tells you: the visit date, patient, chief complaint, and status. You'll also learn how to read that status, whether a note is still in progress, ready for review, or ready for the doctor, and how to click straight into one and pick up where you left off.",
-          "wistia": "6veinsftl4"
+          "wistia": "6veinsftl4",
+          "starter": true
         },
         {
           "title": "Finding and Managing Unbilled Encounters",
@@ -343,7 +385,8 @@
           "url": "https://helpcenter.practiceehr.com/patient/searching-for-a-patient",
           "updated": "July 28, 2026",
           "summary": "However you like to work, a patient is only a quick search away. This video covers the search box at the top of the screen, where the list narrows as you type and you click through to open the chart. You'll also see how to search from Quick Actions if you're heading straight into a new visit or encounter, and how the Patient module prompts you to search the moment you open it.",
-          "wistia": "rso8lnh6pm"
+          "wistia": "rso8lnh6pm",
+          "starter": true
         },
         {
           "title": "The Patient Chart",
@@ -359,7 +402,8 @@
           "url": "https://helpcenter.practiceehr.com/patient/reviewing-visits-and-starting-a-new-one",
           "updated": "July 28, 2026",
           "summary": "Every visit a patient has had, and any coming up, is listed right on their chart with the template, chief complaint, date, provider, and visit type. This video walks through searching that list by chief complaint, provider, CPT, or ICD code, and narrowing it to a time range when you only want recent visits. You'll also learn how to start a new visit from the chart, what to set on the start screen, and how to run a quick encounter instead when all you need is a super bill.",
-          "wistia": "p4tgsp7jdc"
+          "wistia": "p4tgsp7jdc",
+          "starter": true
         },
         {
           "title": "Reviewing the Flow Sheet",
@@ -407,7 +451,8 @@
           "url": "https://helpcenter.practiceehr.com/patient/patient-messages",
           "updated": "July 28, 2026",
           "summary": "The messages screen keeps every conversation and communication tied to a patient in one spot, with two tabs at the top for patient messages and SMS conversations. This video walks through the message list, what each column tells you, and how to search and filter down by status, type, or who it's assigned to, plus the resolved toggle for bringing closed messages back into view. You'll also learn how to send a new message, including templates, and how it reaches the patient, and how the SMS tab shows your text thread with pending, sent, and seen status on each one.",
-          "wistia": "yriydwoasv"
+          "wistia": "yriydwoasv",
+          "starter": true
         },
         {
           "title": "How to Order a Lab",
@@ -461,7 +506,8 @@
           "url": "https://helpcenter.practiceehr.com/scheduling/how-to-book-an-appointment",
           "updated": "July 28, 2026",
           "summary": "Booking an appointment starts from the scheduling calendar once the provider has a schedule in place. This video walks through the two ways to open the create appointment window: the plus icon or clicking an open slot, then searching for the patient or creating one on the spot. You'll also learn how alerts flag a clinical or financial issue before you book, how the slots update to show what's actually open, and how to attach the kiosk and intake forms to the visit.",
-          "wistia": "cpjh87mv3g"
+          "wistia": "cpjh87mv3g",
+          "starter": true
         },
         {
           "title": "Getting Around the Calendar",
@@ -751,5 +797,112 @@
     "emailNote": "Response within 24 hours",
     "phone": "(469) 305-7171",
     "phoneNote": "Mon–Fri, 9am–6pm CT. Client support: ext. 2"
-  }
+  },
+  "kiosk": [
+    {
+      "id": "forms-builder",
+      "title": "Build PracticeEHR forms (Form Builder)",
+      "source": "official",
+      "intro": "Patient-facing forms live in PracticeEHR's Form Builder: intake, consent, surveys, and screenings. Those are the forms patients fill on the kiosk, portal, or a shared link.",
+      "timestamp": "Aug 2026 release notes (Letter Builder & Form Builder)",
+      "steps": [
+        "Go to Setup > Clinical > Letters / Form Builder.",
+        "Create a form and pick a category: Intake, Consent, Survey, or Screening.",
+        "Drag in fields: headings, short/long text, numbers, dates, birth date, phone/email/address, dropdowns, single/multiple choice, yes/no, star or 1–10 ratings, file uploads, signatures, sections, and page breaks.",
+        "Publish the form for patients. Published Intake and Consent forms appear in the kiosk's Forms and Consents steps.",
+        "You can also share a form by link; it opens ready to fill, and submissions show up in real time.",
+        "Open Submissions to track Pending vs Completed. Staff can fill any practice-only fields and close each submission."
+      ],
+      "tips": [
+        "Only change practice-wide forms if you're authorized. Confirm with your admin which forms are enabled.",
+        "For behavioral health, PracticeEHR can auto-send PHQ-9 and GAD-7 as Screening forms between sessions.",
+        "Need a paper copy of a blank patient form? In Form Builder, open the form and use Share link (patients fill digitally), or ask your admin whether your practice also keeps printable PDFs. Practice letters (Setup → Letters) have a built-in Print control; patient forms are mainly digital on the kiosk/portal."
+      ],
+      "links": [
+        {
+          "label": "August 2026 release notes (Form Builder)",
+          "url": "https://www.practiceehr.com/latest-releases/august-2026"
+        }
+      ]
+    },
+    {
+      "id": "forms-on-kiosk",
+      "title": "Where forms show up on the kiosk",
+      "source": "official",
+      "intro": "On the Web KIOSK / tablet check-in, PracticeEHR forms are their own steps. Patients fill them after demographics and insurance, before payment.",
+      "timestamp": "Sept 2026 release notes (Web KIOSK new UI)",
+      "steps": [
+        "Patient starts check-in (kiosk app on an iPad, or Web KIOSK / web check-in link) and completes Verification, Demographics, and Insurance.",
+        "Forms step: every Intake / Survey / Screening form published for that patient appears one at a time. The patient completes each and taps Continue.",
+        "Consents step: published Consent forms appear the same way, with electronic signature.",
+        "After forms and consents, the patient reaches Payment (Pay Now or Pay Later), then sees check-in confirmation and lands in Patients in Office."
+      ],
+      "tips": [
+        "If a form is missing on the kiosk, it usually isn't published or assigned. Ask your admin to check Form Builder.",
+        "Patients can also get forms earlier by email, patient portal, or a web check-in link (gear icon on the appointment → Generate Web Check-In Link)."
+      ],
+      "links": [
+        {
+          "label": "September 2026 release notes (Web KIOSK)",
+          "url": "https://www.practiceehr.com/latest-releases/september-2026"
+        },
+        {
+          "label": "Patient Check-in Kiosk product page",
+          "url": "https://www.practiceehr.com/product/patient-check-in-kiosk"
+        }
+      ]
+    },
+    {
+      "id": "forms-into-note",
+      "title": "Copy intake form answers into the visit note",
+      "source": "training",
+      "intro": "History and ROS questionnaires the patient filled (portal, email, or kiosk) can be copied into your note so you don't retype them.",
+      "timestamp": "Recording: ~45:09–47:47",
+      "steps": [
+        "Before the visit, send the History & ROS intake questionnaire by email or patient portal, or have the patient fill it on the kiosk.",
+        "Start the visit. Before AI Scribe, click the gear icon and choose Intake (last option) to see what the patient entered.",
+        "Click the intake form at the top right to copy those answers into your note. You can edit afterward.",
+        "Open AI Scribe and toggle OFF History and ROS so the AI doesn't overwrite the patient's answers, then start the scribe.",
+        "Review the note, then click In Progress → Sign Off when ready."
+      ],
+      "tips": [
+        "The trainer said History and ROS in your note template must match the intake form (guided questions, not free-text boxes) or the answers won't copy. Ask your admin or trainer to align them."
+      ]
+    },
+    {
+      "id": "forms-front-desk",
+      "title": "Front desk: forms not done / walk-ins",
+      "source": "training",
+      "intro": "What to do when forms aren't finished, or a walk-in needs check-in before forms and the visit.",
+      "timestamp": "Recording: ~07:36 + official kiosk notes",
+      "steps": [
+        "Walk-in? Use Walk-in Check-in (extreme top right) first so the patient appears in Patients in Office, then have them finish forms on the kiosk if needed (training ~07:36).",
+        "If the patient skipped or couldn't finish Forms/Consents, help them complete those on the kiosk or portal before the visit starts.",
+        "If insurance eligibility failed at the kiosk, the front desk is notified — confirm coverage before the visit.",
+        "Patients who choose Pay Later settle at the front desk after forms."
+      ]
+    }
+  ],
+  "references": [
+    {
+      "label": "PracticeEHR behavioral health features",
+      "url": "https://www.practiceehr.com/specialties/behavioral-health-ehr",
+      "note": "Therapy templates (SOAP, DAP, BIRP), PHQ-9/GAD-7 auto-send, group sessions, TeleVisit with AI Scribe, audio-only for Medicare behavioral health visits. These describe capabilities; confirm with your admin what's enabled for your practice."
+    },
+    {
+      "label": "PracticeEHR June 2026 interface update",
+      "url": "https://www.practiceehr.com/latest-releases/june-2026",
+      "note": "The new UI, new calendar, and patient portal. Explains why some screens may look different from older videos."
+    },
+    {
+      "label": "HHS: telebehavioral health emergency planning",
+      "url": "https://telehealth.hhs.gov/providers/best-practice-guides/telehealth-for-behavioral-health/preparing-patients-for-telebehavioral-health/creating-a-telehealth-emergency-plan",
+      "note": "What to document before a first telebehavioral visit: patient location, local emergency numbers, emergency contact, other providers, and a disconnection plan."
+    },
+    {
+      "label": "NJ Professional Counselor Examiners Committee FAQ",
+      "url": "https://www.njconsumeraffairs.gov/pc/Pages/FAQ.aspx",
+      "note": "NJ licensing rules for LPCs and LACs. LACs must practice under the direct supervision of an approved supervisor. Also covers supervision hours, 40 CEUs every two years (5 ethics, 3 social and cultural competency), and renewal by November 30 of even-numbered years."
+    }
+  ]
 }

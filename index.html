@@ -39,6 +39,12 @@ a{color:var(--accent)}
 .badge{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;margin-left:6px;vertical-align:middle;letter-spacing:0;text-transform:none}
 .badge.training{background:#eef2f7;color:#4d6178}
 .badge.official{background:#e3f4ea;color:#21704a}
+.badge.reference{background:#f3ecfb;color:#5b3a8c}
+.badge.starter{background:#fff1d6;color:#8a5a00}
+.video.starter{border-color:#e8c77a}
+.badge.reference{background:#f3ecfb;color:#5b3a8c}
+.badge.starter{background:#fff1d6;color:#8a5a00}
+.video.starter{border-color:#e8c77a}
 .subtitle{margin:0;color:var(--muted)}
 .steps{padding:0;list-style:none;margin:20px 0 0;counter-reset:step}
 .steps li{display:flex;gap:12px;padding:12px 0;border-top:1px solid #edf0f4}
@@ -98,12 +104,24 @@ a{color:var(--accent)}
   .hero h2{font-size:26px}
 }
 @media print{
-  .sidebar,.assistant-launch,.chat,.hero-actions,.modal,#videos,.card-actions{display:none!important}
+  .sidebar,.assistant-launch,.chat,.hero-actions,.modal,#videos,.card-actions,.btn,#printForms{display:none!important}
   .content{margin:0;padding:0}
   .grid{display:block}
-  .card{break-inside:avoid;box-shadow:none;margin-bottom:10px}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ccc;margin-bottom:12px;page-break-inside:avoid}
   .faq details{break-inside:avoid}
   .hero{padding:10px}
+  .alert,.footer{display:none!important}
+  body.print-forms-only .hero,
+  body.print-forms-only #guide,
+  body.print-forms-only #videos,
+  body.print-forms-only #faq,
+  body.print-forms-only #whats-new,
+  body.print-forms-only #support,
+  body.print-forms-only #noResults,
+  body.print-forms-only #loadError{display:none!important}
+  body.print-forms-only #kiosk{display:block!important}
+  body.print-forms-only #kiosk .lead{display:block}
+  body.print-forms-only .content{padding:0}
 }
 </style>
 </head>
@@ -115,6 +133,7 @@ a{color:var(--accent)}
   <div class="links">
     <div class="nav-label">Guide</div>
     <div id="guideLinks" style="display:contents"></div>
+    <a href="#kiosk">PracticeEHR forms</a>
     <div class="nav-label">Resources</div>
     <a href="#videos">Help videos</a>
     <a href="#faq">FAQ</a>
@@ -131,6 +150,7 @@ a{color:var(--accent)}
     <div class="hero-actions">
       <button class="btn primary" id="askHero">Ask the AI helper</button>
       <a class="btn" href="#telehealth">Telehealth</a>
+      <a class="btn" href="#kiosk">PracticeEHR forms</a>
       <a class="btn" href="#videos">Help videos</a>
       <button class="btn" onclick="window.print()">Print guide</button>
       <button class="btn hidden" id="clearSearch">Clear search</button>
@@ -143,8 +163,17 @@ a{color:var(--accent)}
 
   <section class="block" id="guide">
     <h2>Step-by-step guide</h2>
-    <p class="lead">Sections marked <span class="badge training">From training</span> come from the October 23 recording. <span class="badge official">Official</span> sections use PracticeEHR's Help Center and release notes.</p>
+    <p class="lead">Sections marked <span class="badge training">From training</span> come from the October 23 recording. <span class="badge official">Official</span> sections use PracticeEHR's Help Center and release notes. <span class="badge reference">Reference</span> sections use outside guidance such as HHS.</p>
     <div id="cards" class="grid"></div>
+  </section>
+
+  <section class="block" id="kiosk">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
+      <h2 style="margin:0">PracticeEHR forms</h2>
+      <button class="btn small" type="button" id="printForms">Print this forms guide</button>
+    </div>
+    <p class="lead">Form Builder (intake, consent, surveys, screenings), how those forms show up on the kiosk, and how to copy answers into your note. Use the print button for a clean paper copy of these steps. Blank patient forms themselves are printed or shared from inside PracticeEHR (Setup → Form Builder).</p>
+    <div id="kioskCards" class="grid"></div>
   </section>
 
   <section class="block" id="videos">
@@ -169,6 +198,8 @@ a{color:var(--accent)}
     <h2>Support &amp; contacts</h2>
     <p class="lead">For anything this guide doesn't cover, reach PracticeEHR support or your practice admin.</p>
     <div id="supportList" class="support-grid"></div>
+    <h3 style="margin:24px 0 10px">References</h3>
+    <div id="referenceList" class="grid"></div>
   </section>
 
   <div id="noResults" class="empty hidden">No matches. Try “televisit”, “scribe”, “Sentence View”, “billing”, or ask the assistant.</div>
@@ -191,6 +222,7 @@ a{color:var(--accent)}
     <button type="button" data-q="How do I start a TeleVisit?">Start a TeleVisit</button>
     <button type="button" data-q="How do I use AI Scribe?">Use AI Scribe</button>
     <button type="button" data-q="Is there a video on booking an appointment?">Find a video</button>
+    <button type="button" data-q="How do PracticeEHR intake forms work on the kiosk?">Forms on kiosk</button>
   </div>
   <div class="chat-log" id="log" aria-live="polite">
     <div class="bubble bot">Hi! Ask me how to do something in PracticeEHR. I’ll give you short steps, point you to the right help video, and tell you what the training does or doesn’t confirm.</div>
@@ -259,15 +291,20 @@ function watchButton(id, title, url) {
 }
 
 // ---------- renderers ----------
-function renderGuide(guide) {
-  const cards = document.getElementById("cards");
-  const links = document.getElementById("guideLinks");
-  for (const d of guide) {
-    links.append(el("a", { href: "#" + d.id, text: d.title }));
+const BADGES = {
+  training: "From training",
+  official: "Official",
+  reference: "Reference"
+};
 
-    const official = d.source === "official";
+function renderCards(containerId, items, linksEl) {
+  const cards = document.getElementById(containerId);
+  for (const d of items) {
+    if (linksEl) linksEl.append(el("a", { href: "#" + d.id, text: d.title }));
+
+    const source = BADGES[d.source] ? d.source : "training";
     const eye = el("div", { class: "eyebrow", text: d.timestamp || "Training guide" });
-    eye.append(el("span", { class: "badge " + (official ? "official" : "training"), text: official ? "Official" : "From training" }));
+    eye.append(el("span", { class: "badge " + source, text: BADGES[source] }));
 
     const ol = el("ol", { class: "steps" }, (d.steps || []).map((t) => el("li", { text: t })));
     const tips = d.tips && d.tips.length ? el("ul", { class: "tips" }, d.tips.map((t) => el("li", { text: t }))) : null;
@@ -277,8 +314,9 @@ function renderGuide(guide) {
     for (const l of d.links || []) actions.push(extLink(l.label + " ↗", l.url));
     const actionRow = actions.length ? el("div", { class: "card-actions" }, actions) : null;
 
+    const featured = d.id === "telehealth" || d.id === "forms-builder";
     const card = el("section", {
-      class: "card searchable" + (d.id === "telehealth" ? " featured" : ""),
+      class: "card searchable" + (featured ? " featured" : ""),
       id: d.id,
       dataset: { text: JSON.stringify(d).toLowerCase() }
     }, [eye, el("h3", { text: d.title }), el("p", { class: "subtitle", text: d.intro }), ol, tips, actionRow]);
@@ -288,15 +326,34 @@ function renderGuide(guide) {
 
 function renderVideos(groups) {
   const wrap = document.getElementById("videoGroups");
+  const starters = [];
+  for (const g of groups) {
+    for (const v of g.items) if (v.starter) starters.push(v);
+  }
+  if (starters.length) {
+    const grid = el("div", { class: "video-grid" });
+    for (const v of starters) {
+      grid.append(el("div", {
+        class: "video starter searchable",
+        dataset: { text: ("start here " + v.title + " " + (v.tagline || "") + " " + v.summary).toLowerCase() }
+      }, [
+        el("strong", { text: v.title }),
+        el("div", { class: "meta" }, [el("span", { class: "badge starter", text: "Start here" }), document.createTextNode(" · Updated " + v.updated)]),
+        el("div", { class: "sum", text: v.summary, title: v.summary }),
+        el("div", { class: "row" }, [watchButton(v.wistia, v.title, v.url), extLink("Help Center ↗", v.url)])
+      ]));
+    }
+    wrap.append(el("div", { class: "video-group searchable-group" }, [el("h3", { text: "Start here (" + starters.length + ")" }), grid]));
+  }
   for (const g of groups) {
     const grid = el("div", { class: "video-grid" });
     for (const v of g.items) {
       grid.append(el("div", {
-        class: "video searchable",
+        class: "video searchable" + (v.starter ? " starter" : ""),
         dataset: { text: (g.label + " " + v.title + " " + (v.tagline || "") + " " + v.summary).toLowerCase() }
       }, [
         el("strong", { text: v.title }),
-        el("div", { class: "meta", text: (v.tagline ? v.tagline + " · " : "") + "Updated " + v.updated }),
+        el("div", { class: "meta", text: (v.starter ? "Start here · " : "") + (v.tagline ? v.tagline + " · " : "") + "Updated " + v.updated }),
         el("div", { class: "sum", text: v.summary, title: v.summary }),
         el("div", { class: "row" }, [watchButton(v.wistia, v.title, v.url), extLink("Help Center ↗", v.url)])
       ]));
@@ -340,6 +397,21 @@ function renderSupport(s) {
   ];
   for (const i of items) {
     list.append(el("div", { class: "release searchable", dataset: { text: (i.h + " " + i.body.map((b) => b.textContent).join(" ")).toLowerCase() } }, [el("h3", { text: i.h })].concat(i.body)));
+  }
+}
+
+function renderReferences(refs) {
+  const list = document.getElementById("referenceList");
+  if (!list || !refs || !refs.length) return;
+  for (const r of refs) {
+    list.append(el("div", {
+      class: "release searchable",
+      dataset: { text: (r.label + " " + (r.note || "")).toLowerCase() }
+    }, [
+      el("h3", { text: r.label }),
+      el("p", { text: r.note || "" }),
+      el("div", { class: "card-actions" }, [extLink("Open reference ↗", r.url)])
+    ]));
   }
 }
 
@@ -399,18 +471,23 @@ let DOCS = [];
 
 function buildDocs(k) {
   const docs = [];
-  for (const d of k.guide) {
+  function addCard(d, section) {
     docs.push({
       head: d.title,
-      body: d.intro + " " + d.steps.join(" ") + " " + (d.tips || []).join(" "),
-      answer: () => d.title + "\n" + d.steps.map((s, i) => i + 1 + ". " + s).join("\n") + "\n\nGuide section: " + d.title + " (see the menu)." + (d.video ? "\nVideo: " + d.video.title + " — " + d.video.url : "")
+      body: d.intro + " " + (d.steps || []).join(" ") + " " + (d.tips || []).join(" "),
+      answer: () => d.title + "\n" + (d.steps || []).map((s, i) => i + 1 + ". " + s).join("\n") + "\n\nGuide section: " + d.title + " (" + section + ")." + (d.video ? "\nVideo: " + d.video.title + " — " + d.video.url : "")
     });
   }
-  for (const f of k.faqs) docs.push({ head: f.q, body: f.a, answer: () => f.q + "\n" + f.a });
-  for (const g of k.videos) {
+  for (const d of k.guide || []) addCard(d, "see the menu");
+  for (const d of k.kiosk || []) addCard(d, "PracticeEHR forms");
+  for (const f of k.faqs || []) docs.push({ head: f.q, body: f.a, answer: () => f.q + "\n" + f.a });
+  for (const g of k.videos || []) {
     for (const v of g.items) {
       docs.push({ head: v.title, body: g.label + " " + (v.tagline || "") + " " + v.summary, answer: () => "Help video: " + v.title + "\n" + v.summary + "\n\nWatch: " + v.url });
     }
+  }
+  for (const r of k.references || []) {
+    docs.push({ head: r.label, body: r.note || "", answer: () => r.label + "\n" + (r.note || "") + "\n\nOpen: " + r.url });
   }
   return docs;
 }
@@ -425,7 +502,7 @@ function localAnswer(q) {
 
   const best = scored[0];
   if (!best || best.s === 0) {
-    return "I couldn’t find that in the guide. Try asking about TeleVisit, opening a visit, AI Scribe, Sentence View, or a help video topic. For anything else, contact PracticeEHR support (see Support & contacts).";
+    return "I couldn’t find that in the guide. Try asking about TeleVisit, PracticeEHR forms, Form Builder, opening a visit, AI Scribe, Sentence View, or a help video topic. For anything else, contact PracticeEHR support (see Support & contacts).";
   }
   return best.d.answer() + "\n\nNote: This is a guide lookup, not a live AI response.";
 }
@@ -483,13 +560,26 @@ document.querySelectorAll("[data-q]").forEach((b) => {
     const k = await res.json();
     if (!k || !Array.isArray(k.guide)) throw new Error("Bad knowledge.json shape");
 
-    renderGuide(k.guide);
+    renderCards("cards", k.guide || [], document.getElementById("guideLinks"));
+    renderCards("kioskCards", k.kiosk || []);
     renderVideos(k.videos || []);
     renderFaqs(k.faqs || [], k.support || {});
     renderReleases(k.releases || [], k.support || {});
     renderSupport(k.support || {});
+    renderReferences(k.references || []);
     document.getElementById("updatedOn").textContent = "last checked " + (k.updated || "recently");
     DOCS = buildDocs(k);
+
+    document.getElementById("printForms").onclick = () => {
+      document.body.classList.add("print-forms-only");
+      const cleanup = () => {
+        document.body.classList.remove("print-forms-only");
+        window.removeEventListener("afterprint", cleanup);
+      };
+      window.addEventListener("afterprint", cleanup);
+      window.print();
+      setTimeout(cleanup, 1000);
+    };
 
     if (location.hash) {
       const target = document.getElementById(location.hash.slice(1));

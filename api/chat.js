@@ -13,10 +13,11 @@ try {
   console.error("Failed to load knowledge.json", err);
 }
 
-function buildContext(k) {
-  const guide = (k.guide || [])
+function sectionBlock(items, heading) {
+  return (items || [])
     .map((s) => {
-      const label = s.source === "official" ? "OFFICIAL" : "TRAINING";
+      const label =
+        s.source === "official" ? "OFFICIAL" : s.source === "reference" ? "REFERENCE" : "TRAINING";
       const lines = [`[${label}] ${s.title} (${s.timestamp}): ${s.intro}`];
       (s.steps || []).forEach((v, i) => lines.push(`${i + 1}. ${v}`));
       (s.tips || []).forEach((t) => lines.push(`Tip: ${t}`));
@@ -25,7 +26,11 @@ function buildContext(k) {
       return lines.join("\n");
     })
     .join("\n\n");
+}
 
+function buildContext(k) {
+  const guide = sectionBlock(k.guide, "GUIDE");
+  const forms = sectionBlock(k.kiosk, "PRACTICEEHR FORMS");
   const faqs = (k.faqs || []).map((f) => `Q: ${f.q}\nA: ${f.a}`).join("\n\n");
 
   const videos = (k.videos || [])
@@ -40,10 +45,14 @@ function buildContext(k) {
     .map((r) => `${r.month} (${r.url}): ${r.items.join("; ")}`)
     .join("\n");
 
+  const refs = (k.references || [])
+    .map((r) => `${r.label}: ${r.note || ""} — ${r.url}`)
+    .join("\n");
+
   const s = k.support || {};
   const support = `Phone ${s.phone} (${s.phoneNote}). Email ${s.email} (${s.emailNote}). Help Center ${s.helpCenter}. FAQ ${s.faqPage}.`;
 
-  return `GUIDE:\n${guide}\n\nOFFICIAL FAQ:\n${faqs}\n\nOFFICIAL HELP VIDEOS:\n${videos}\n\nRECENT RELEASES:\n${releases}\n\nSUPPORT:\n${support}`;
+  return `GUIDE:\n${guide}\n\nPRACTICEEHR FORMS (Form Builder / kiosk):\n${forms}\n\nOFFICIAL FAQ:\n${faqs}\n\nOFFICIAL HELP VIDEOS:\n${videos}\n\nRECENT RELEASES:\n${releases}\n\nREFERENCES:\n${refs}\n\nSUPPORT:\n${support}`;
 }
 
 const ctx = knowledge && Array.isArray(knowledge.guide) ? buildContext(knowledge) : "";

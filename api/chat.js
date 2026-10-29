@@ -1,8 +1,10 @@
 // PracticeEHR training companion — Gemini proxy
 // Reads guide + official resources from knowledge.json and answers from that only.
+// Optional: Ruby mode (extra uplifting + Marvel Rivals every 10 user messages).
 
 const fs = require("fs");
 const path = require("path");
+const { list, get } = require("@vercel/blob");
 
 let knowledge = null;
 try {
@@ -13,11 +15,15 @@ try {
   console.error("Failed to load knowledge.json", err);
 }
 
-function sectionBlock(items, heading) {
+function sectionBlock(items) {
   return (items || [])
     .map((s) => {
       const label =
-        s.source === "official" ? "OFFICIAL" : s.source === "reference" ? "REFERENCE" : "TRAINING";
+        s.source === "official"
+          ? "OFFICIAL"
+          : s.source === "reference"
+            ? "REFERENCE"
+            : "TRAINING";
       const lines = [`[${label}] ${s.title} (${s.timestamp}): ${s.intro}`];
       (s.steps || []).forEach((v, i) => lines.push(`${i + 1}. ${v}`));
       (s.tips || []).forEach((t) => lines.push(`Tip: ${t}`));
@@ -29,15 +35,20 @@ function sectionBlock(items, heading) {
 }
 
 function buildContext(k) {
-  const guide = sectionBlock(k.guide, "GUIDE");
-  const forms = sectionBlock(k.kiosk, "PRACTICEEHR FORMS");
+  const guide = sectionBlock(k.guide);
+  const forms = sectionBlock(k.kiosk);
   const faqs = (k.faqs || []).map((f) => `Q: ${f.q}\nA: ${f.a}`).join("\n\n");
 
   const videos = (k.videos || [])
     .map(
       (g) =>
         `${g.label}:\n` +
-        g.items.map((v) => `- ${v.title} (updated ${v.updated}) — ${v.url}\n  ${v.summary}`).join("\n")
+        g.items
+          .map(
+            (v) =>
+              `- ${v.title} (updated ${v.updated}) — ${v.url}\n  ${v.summary}`
+          )
+          .join("\n")
     )
     .join("\n\n");
 
@@ -55,7 +66,42 @@ function buildContext(k) {
   return `GUIDE:\n${guide}\n\nPRACTICEEHR FORMS (Form Builder / kiosk):\n${forms}\n\nOFFICIAL FAQ:\n${faqs}\n\nOFFICIAL HELP VIDEOS:\n${videos}\n\nRECENT RELEASES:\n${releases}\n\nREFERENCES:\n${refs}\n\nSUPPORT:\n${support}`;
 }
 
-const ctx = knowledge && Array.isArray(knowledge.guide) ? buildContext(knowledge) : "";
+const ctx =
+  knowledge && Array.isArray(knowledge.guide) ? buildContext(knowledge) : "";
+
+async function loadRubyNotes() {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return [];
+  try {
+    const { blobs } = await list({
+      prefix: "ruby-input/",
+      token: process.env.BLOB_READ_WRITE_TOKEN
+    });
+    const notes = [];
+    for (const b of blobs.slice(0, 40)) {
+      try {
+        const result = await get(b.pathname, {
+          access: "private",
+          token: process.env.BLOB_READ_WRITE_TOKEN
+        });
+        if (!result || !result.stream) continue;
+        const chunks = [];
+        for await (const chunk of result.stream) chunks.push(chunk);
+        const n = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+        if (n && n.text && n.status !== "done") {
+          notes.push(
+            `- (${n.name || "Ruby"}, ${n.createdAt || "?"}): ${n.text}`
+          );
+        }
+      } catch (_) {
+        /* skip bad blob */
+      }
+    }
+    return notes;
+  } catch (err) {
+    console.error("loadRubyNotes failed", err);
+    return [];
+  }
+}
 
 function extractAnswer(data) {
   const parts = data?.candidates?.[0]?.content?.parts;
@@ -66,6 +112,14 @@ function extractAnswer(data) {
     .join("\n")
     .trim();
 }
+
+const MARVEL_RIVALS_NUDGES = [
+  "You are clearing this PracticeEHR queue like a ranked Marvel Rivals win streak — one clean objective at a time.",
+  "Think of this step as landing the team-up: you + the note template vs. the blank chart. Easy win.",
+  "Marvel Rivals energy: call your role, stick the plan, then celebrate the point. You've got this chart.",
+  "Quick Marvel Rivals pep talk: even when the fight looks messy, a calm rotate wins the round. Same with AI Scribe review.",
+  "You're the clutch support pick today — keep the team (and the note) alive. Marvel Rivals would be proud."
+];
 
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
@@ -82,7 +136,12 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: "Training guide unavailable" });
   }
 
-  const { message, history = [] } = req.body || {};
+  const {
+    message,
+    history = [],
+    isRuby = false,
+    userMessageNumber = 0
+  } = req.body || {};
   if (typeof message !== "string" || !message.trim() || message.length > 1200) {
     return res.status(400).json({ error: "Invalid question" });
   }
@@ -95,9 +154,32 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "Do not include patient information" });
   }
 
-  const prompt =
-    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, and support contacts. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material.\n\n" +
-    ctx;
+  const rubyNotes = await loadRubyNotes();
+  const rubyBlock =
+    rubyNotes.length > 0
+      ? "\n\nOPEN RUBY INPUT NOTES (prioritize answering these themes when relevant):\n" +
+        rubyNotes.join("\n")
+      : "";
+
+  let persona =
+    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, support contacts, and any open Ruby input notes. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material.";
+
+  if (isRuby) {
+    persona +=
+      " The current user is Ruby. Be especially warm, patient, and uplifting. Celebrate small wins. Reassure her that forgetting steps is normal and that practice on test patients is smart. Prefer plain language. When her question matches an open Ruby input note, acknowledge that and answer it clearly.";
+    const n = Number(userMessageNumber) || 0;
+    if (n > 0 && n % 10 === 0) {
+      const nudge =
+        MARVEL_RIVALS_NUDGES[(Math.floor(n / 10) - 1) % MARVEL_RIVALS_NUDGES.length];
+      persona +=
+        " This is Ruby's message #" +
+        n +
+        ". After the helpful steps, add one short uplifting Marvel Rivals–flavored cheer (one sentence max, not forced into the clinical steps): " +
+        nudge;
+    }
+  }
+
+  const prompt = persona + "\n\n" + ctx + rubyBlock;
 
   const previous = Array.isArray(history)
     ? history
@@ -146,7 +228,9 @@ module.exports = async function handler(req, res) {
       console.error(
         "Gemini returned no text",
         model,
-        JSON.stringify(data?.candidates?.[0]?.finishReason || data?.promptFeedback || {})
+        JSON.stringify(
+          data?.candidates?.[0]?.finishReason || data?.promptFeedback || {}
+        )
       );
     }
     return res.status(200).json({

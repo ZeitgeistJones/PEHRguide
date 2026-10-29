@@ -2,6 +2,9 @@
   "functions": {
     "api/chat.js": {
       "maxDuration": 15
+    },
+    "api/ruby-input.js": {
+      "maxDuration": 10
     }
   }
 }

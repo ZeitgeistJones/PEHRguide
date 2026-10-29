@@ -134,6 +134,7 @@ a{color:var(--accent)}
     <div class="nav-label">Guide</div>
     <div id="guideLinks" style="display:contents"></div>
     <a href="#kiosk">PracticeEHR forms</a>
+    <a href="#ruby-input">Ruby input</a>
     <div class="nav-label">Resources</div>
     <a href="#videos">Help videos</a>
     <a href="#faq">FAQ</a>
@@ -151,6 +152,7 @@ a{color:var(--accent)}
       <button class="btn primary" id="askHero">Ask the AI helper</button>
       <a class="btn" href="#telehealth">Telehealth</a>
       <a class="btn" href="#kiosk">PracticeEHR forms</a>
+      <a class="btn" href="#ruby-input">Ruby input</a>
       <a class="btn" href="#videos">Help videos</a>
       <button class="btn" onclick="window.print()">Print guide</button>
       <button class="btn hidden" id="clearSearch">Clear search</button>
@@ -174,6 +176,23 @@ a{color:var(--accent)}
     </div>
     <p class="lead">Form Builder (intake, consent, surveys, screenings), how those forms show up on the kiosk, and how to copy answers into your note. Use the print button for a clean paper copy of these steps. Blank patient forms themselves are printed or shared from inside PracticeEHR (Setup → Form Builder).</p>
     <div id="kioskCards" class="grid"></div>
+  </section>
+
+  <section class="block" id="ruby-input">
+    <h2>Ruby input</h2>
+    <p class="lead">Ruby (or anyone helping her) can drop questions, “I got stuck here,” and wishlist notes while using the site. Vincent can reopen this section anytime, mark items done, and the AI helper will prefer open notes when answering.</p>
+    <form id="rubyForm" class="card" style="margin-bottom:16px">
+      <label class="eyebrow" for="rubyName">Who’s writing</label>
+      <input id="rubyName" value="Ruby" maxlength="40" style="width:100%;padding:10px;border:1px solid #c5d4e2;border-radius:9px;margin:6px 0 12px">
+      <label class="eyebrow" for="rubyText">Note / question</label>
+      <textarea id="rubyText" required maxlength="2000" rows="4" placeholder="Example: I still get lost finding Form Builder → Intake, or I want a clearer path for pre-visit history like TherapyNotes." style="width:100%;padding:10px;border:1px solid #c5d4e2;border-radius:9px;margin:6px 0 12px;resize:vertical;font:inherit"></textarea>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <button class="btn primary" type="submit">Save to Ruby input</button>
+        <span id="rubyStatus" class="meta" style="font-size:13px;color:var(--muted)"></span>
+      </div>
+      <p class="privacy" style="padding:10px 0 0">No patient names, DOBs, or chart details. This board is for workflow notes only.</p>
+    </form>
+    <div id="rubyList" class="grid"></div>
   </section>
 
   <section class="block" id="videos">
@@ -217,6 +236,10 @@ a{color:var(--accent)}
     </div>
     <button id="closeChat" aria-label="Close chat">×</button>
   </div>
+  <div class="suggestions" id="rubyGate">
+    <button type="button" id="yesRuby">Yes — I’m Ruby</button>
+    <button type="button" id="notRuby">Just browsing</button>
+  </div>
   <div class="suggestions" id="suggestions">
     <button type="button" data-q="How do I get Scribe text into individual boxes?">Sentence View → boxes</button>
     <button type="button" data-q="How do I start a TeleVisit?">Start a TeleVisit</button>
@@ -225,7 +248,7 @@ a{color:var(--accent)}
     <button type="button" data-q="How do PracticeEHR intake forms work on the kiosk?">Forms on kiosk</button>
   </div>
   <div class="chat-log" id="log" aria-live="polite">
-    <div class="bubble bot">Hi! Ask me how to do something in PracticeEHR. I’ll give you short steps, point you to the right help video, and tell you what the training does or doesn’t confirm.</div>
+    <div class="bubble bot">Hi! Quick check — is this Ruby perhaps? If yes, I’ll keep things extra encouraging (and sneak in a little Marvel Rivals cheer every so often). Ask me anything about PracticeEHR either way.</div>
   </div>
   <form class="chat-form" id="chatForm">
     <input id="question" maxlength="1200" autocomplete="off" placeholder="e.g., How do I mark a TeleVisit no-show?" aria-label="Ask a question" required>
@@ -509,6 +532,30 @@ function localAnswer(q) {
 
 const PHI_RE = /\b(?:ssn|social security|date of birth|dob|mrn|medical record number)\b/i;
 let history = [];
+let isRuby = localStorage.getItem("pehr-is-ruby") === "1";
+let rubyUserTurns = Number(localStorage.getItem("pehr-ruby-turns") || "0") || 0;
+
+function setRubyMode(on) {
+  isRuby = !!on;
+  localStorage.setItem("pehr-is-ruby", on ? "1" : "0");
+  const gate = document.getElementById("rubyGate");
+  if (gate) gate.classList.add("hidden");
+  if (on) {
+    bubble("Awesome — hey Ruby! I’ve got your back. Ask anything, drop notes in the Ruby input section, and every 10 questions I’ll toss in a tiny Marvel Rivals pep talk. You’re going to crush this.", "bot");
+  } else {
+    bubble("Got it — browsing mode. Ask anything about PracticeEHR whenever you’re ready.", "bot");
+  }
+}
+
+document.getElementById("yesRuby").onclick = () => setRubyMode(true);
+document.getElementById("notRuby").onclick = () => setRubyMode(false);
+if (localStorage.getItem("pehr-is-ruby") !== null) {
+  document.getElementById("rubyGate").classList.add("hidden");
+  if (isRuby) {
+    document.querySelector("#log .bubble.bot").textContent =
+      "Welcome back, Ruby! Still here to cheer you on. Ask away — and use Ruby input anytime you want Vincent to see a note.";
+  }
+}
 
 async function submit(q) {
   q = q.trim();
@@ -520,15 +567,24 @@ async function submit(q) {
   }
 
   bubble(q, "user");
-  const pending = bubble("Checking the guide…", "bot");
+  const pending = bubble(isRuby ? "On it, Ruby — checking the guide…" : "Checking the guide…", "bot");
   question.value = "";
   const previous = history.slice(-6);
+  if (isRuby) {
+    rubyUserTurns += 1;
+    localStorage.setItem("pehr-ruby-turns", String(rubyUserTurns));
+  }
 
   try {
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ message: q, history: previous })
+      body: JSON.stringify({
+        message: q,
+        history: previous,
+        isRuby,
+        userMessageNumber: isRuby ? rubyUserTurns : 0
+      })
     });
     if (!res.ok) throw new Error("Assistant unavailable");
     const data = await res.json();
@@ -581,6 +637,8 @@ document.querySelectorAll("[data-q]").forEach((b) => {
       setTimeout(cleanup, 1000);
     };
 
+    setupRubyBoard();
+
     if (location.hash) {
       const target = document.getElementById(location.hash.slice(1));
       if (target) target.scrollIntoView();
@@ -590,6 +648,80 @@ document.querySelectorAll("[data-q]").forEach((b) => {
     document.getElementById("loadError").classList.remove("hidden");
   }
 })();
+
+async function setupRubyBoard() {
+  const list = document.getElementById("rubyList");
+  const status = document.getElementById("rubyStatus");
+  const form = document.getElementById("rubyForm");
+  if (!list || !form) return;
+
+  async function loadNotes() {
+    list.innerHTML = "";
+    try {
+      const res = await fetch("/api/ruby-input", { cache: "no-cache" });
+      if (!res.ok) throw new Error("load failed");
+      const data = await res.json();
+      const items = data.items || [];
+      if (!items.length) {
+        list.append(el("div", { class: "empty searchable", dataset: { text: "ruby input empty" }, text: "No Ruby notes yet. Add the first one above." }));
+        return;
+      }
+      for (const n of items) {
+        const done = n.status === "done";
+        const actions = [
+          el("button", {
+            class: "btn small",
+            type: "button",
+            text: done ? "Reopen" : "Mark done",
+            onclick: async () => {
+              await fetch("/api/ruby-input", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ id: n.id, action: "status", status: done ? "open" : "done" })
+              });
+              loadNotes();
+            }
+          })
+        ];
+        list.append(el("div", {
+          class: "card searchable",
+          dataset: { text: ("ruby input " + n.name + " " + n.text + " " + n.status).toLowerCase() },
+          style: done ? "opacity:.72" : ""
+        }, [
+          el("div", { class: "eyebrow", text: (n.name || "Ruby") + " · " + new Date(n.createdAt).toLocaleString() + (done ? " · done" : " · open") }),
+          el("p", { class: "subtitle", text: n.text, style: "white-space:pre-wrap" }),
+          el("div", { class: "card-actions" }, actions)
+        ]));
+      }
+    } catch (err) {
+      list.append(el("div", { class: "alert", text: "Could not load Ruby input yet. After the next deploy, refresh this page." }));
+    }
+  }
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const text = document.getElementById("rubyText").value.trim();
+    const name = document.getElementById("rubyName").value.trim() || "Ruby";
+    if (!text) return;
+    status.textContent = "Saving…";
+    try {
+      const res = await fetch("/api/ruby-input", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ text, name })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Save failed");
+      document.getElementById("rubyText").value = "";
+      status.textContent = "Saved.";
+      await loadNotes();
+    } catch (err) {
+      status.textContent = err.message || "Save failed";
+    }
+  };
+
+  loadNotes();
+}
 </script>
 </body>
 </html>

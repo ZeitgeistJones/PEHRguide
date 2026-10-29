@@ -248,7 +248,7 @@ a{color:var(--accent)}
     <button type="button" data-q="How do PracticeEHR intake forms work on the kiosk?">Forms on kiosk</button>
   </div>
   <div class="chat-log" id="log" aria-live="polite">
-    <div class="bubble bot">Hi! Quick check — is this Ruby perhaps? If yes, I’ll keep things extra encouraging (and sneak in a little Marvel Rivals cheer every so often). Ask me anything about PracticeEHR either way.</div>
+    <div class="bubble bot">Hi! Quick check — is this Ruby perhaps? If yes, I’ll keep things extra encouraging. Ask me anything about PracticeEHR either way.</div>
   </div>
   <form class="chat-form" id="chatForm">
     <input id="question" maxlength="1200" autocomplete="off" placeholder="e.g., How do I mark a TeleVisit no-show?" aria-label="Ask a question" required>
@@ -533,7 +533,6 @@ function localAnswer(q) {
 const PHI_RE = /\b(?:ssn|social security|date of birth|dob|mrn|medical record number)\b/i;
 let history = [];
 let isRuby = localStorage.getItem("pehr-is-ruby") === "1";
-let rubyUserTurns = Number(localStorage.getItem("pehr-ruby-turns") || "0") || 0;
 
 function setRubyMode(on) {
   isRuby = !!on;
@@ -541,7 +540,7 @@ function setRubyMode(on) {
   const gate = document.getElementById("rubyGate");
   if (gate) gate.classList.add("hidden");
   if (on) {
-    bubble("Awesome — hey Ruby! I’ve got your back. Ask anything, drop notes in the Ruby input section, and every 10 questions I’ll toss in a tiny Marvel Rivals pep talk. You’re going to crush this.", "bot");
+    bubble("Awesome — hey Ruby! I’ve got your back. Ask anything, and drop notes in the Ruby input section anytime. You’re going to crush this.", "bot");
   } else {
     bubble("Got it — browsing mode. Ask anything about PracticeEHR whenever you’re ready.", "bot");
   }
@@ -570,10 +569,6 @@ async function submit(q) {
   const pending = bubble(isRuby ? "On it, Ruby — checking the guide…" : "Checking the guide…", "bot");
   question.value = "";
   const previous = history.slice(-6);
-  if (isRuby) {
-    rubyUserTurns += 1;
-    localStorage.setItem("pehr-ruby-turns", String(rubyUserTurns));
-  }
 
   try {
     const res = await fetch("/api/chat", {
@@ -582,8 +577,7 @@ async function submit(q) {
       body: JSON.stringify({
         message: q,
         history: previous,
-        isRuby,
-        userMessageNumber: isRuby ? rubyUserTurns : 0
+        isRuby
       })
     });
     if (!res.ok) throw new Error("Assistant unavailable");

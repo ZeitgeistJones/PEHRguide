@@ -1,6 +1,6 @@
 // PracticeEHR training companion — Gemini proxy
 // Reads guide + official resources from knowledge.json and answers from that only.
-// Optional: Ruby mode (extra uplifting + Marvel Rivals every 10 user messages).
+// Optional: Ruby mode (extra warm and plain-language).
 
 const fs = require("fs");
 const path = require("path");
@@ -113,14 +113,6 @@ function extractAnswer(data) {
     .trim();
 }
 
-const MARVEL_RIVALS_NUDGES = [
-  "You are clearing this PracticeEHR queue like a ranked Marvel Rivals win streak — one clean objective at a time.",
-  "Think of this step as landing the team-up: you + the note template vs. the blank chart. Easy win.",
-  "Marvel Rivals energy: call your role, stick the plan, then celebrate the point. You've got this chart.",
-  "Quick Marvel Rivals pep talk: even when the fight looks messy, a calm rotate wins the round. Same with AI Scribe review.",
-  "You're the clutch support pick today — keep the team (and the note) alive. Marvel Rivals would be proud."
-];
-
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
@@ -136,12 +128,7 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: "Training guide unavailable" });
   }
 
-  const {
-    message,
-    history = [],
-    isRuby = false,
-    userMessageNumber = 0
-  } = req.body || {};
+  const { message, history = [], isRuby = false } = req.body || {};
   if (typeof message !== "string" || !message.trim() || message.length > 1200) {
     return res.status(400).json({ error: "Invalid question" });
   }
@@ -167,16 +154,6 @@ module.exports = async function handler(req, res) {
   if (isRuby) {
     persona +=
       " The current user is Ruby. Be especially warm, patient, and uplifting. Celebrate small wins. Reassure her that forgetting steps is normal and that practice on test patients is smart. Prefer plain language. When her question matches an open Ruby input note, acknowledge that and answer it clearly.";
-    const n = Number(userMessageNumber) || 0;
-    if (n > 0 && n % 10 === 0) {
-      const nudge =
-        MARVEL_RIVALS_NUDGES[(Math.floor(n / 10) - 1) % MARVEL_RIVALS_NUDGES.length];
-      persona +=
-        " This is Ruby's message #" +
-        n +
-        ". After the helpful steps, add one short uplifting Marvel Rivals–flavored cheer (one sentence max, not forced into the clinical steps): " +
-        nudge;
-    }
   }
 
   const prompt = persona + "\n\n" + ctx + rubyBlock;

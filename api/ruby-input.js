@@ -1,5 +1,5 @@
-// Live "Ruby input" board — notes Ruby (or staff) leave while using the site.
-// Stored in Vercel Blob so Vincent can review them from any browser.
+// Live "Ruby & Vin input" board — notes they leave while using the site.
+// Stored in Vercel Blob (prefix kept as ruby-input/ so older notes still load).
 
 const { put, list, del, get } = require("@vercel/blob");
 
@@ -49,7 +49,7 @@ module.exports = async function handler(req, res) {
 
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     return res.status(503).json({
-      error: "Ruby input storage is not configured yet."
+      error: "Ruby & Vin input storage is not configured yet."
     });
   }
 
@@ -65,7 +65,7 @@ module.exports = async function handler(req, res) {
       const name =
         typeof body.name === "string" && body.name.trim()
           ? body.name.trim().slice(0, 40)
-          : "Ruby";
+          : "Ruby or Vin";
       const status = body.status === "done" ? "done" : "open";
 
       if (!text || text.length > 2000) {
@@ -124,6 +124,6 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "GET or POST only" });
   } catch (err) {
     console.error("ruby-input failed", err);
-    return res.status(500).json({ error: "Could not save or load Ruby input." });
+    return res.status(500).json({ error: "Could not save or load Ruby & Vin input." });
   }
 };

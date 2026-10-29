@@ -1,6 +1,6 @@
 // PracticeEHR training companion — Gemini proxy
 // Reads guide + official resources from knowledge.json and answers from that only.
-// Optional: Ruby mode (extra warm and plain-language).
+// Also reads open Ruby & Vin input notes so answers can cover those questions.
 
 const fs = require("fs");
 const path = require("path");
@@ -89,7 +89,7 @@ async function loadRubyNotes() {
         const n = JSON.parse(Buffer.concat(chunks).toString("utf8"));
         if (n && n.text && n.status !== "done") {
           notes.push(
-            `- (${n.name || "Ruby"}, ${n.createdAt || "?"}): ${n.text}`
+            `- (${n.name || "Ruby or Vin"}, ${n.createdAt || "?"}): ${n.text}`
           );
         }
       } catch (_) {
@@ -128,7 +128,7 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: "Training guide unavailable" });
   }
 
-  const { message, history = [], isRuby = false } = req.body || {};
+  const { message, history = [] } = req.body || {};
   if (typeof message !== "string" || !message.trim() || message.length > 1200) {
     return res.status(400).json({ error: "Invalid question" });
   }
@@ -144,17 +144,12 @@ module.exports = async function handler(req, res) {
   const rubyNotes = await loadRubyNotes();
   const rubyBlock =
     rubyNotes.length > 0
-      ? "\n\nOPEN RUBY INPUT NOTES (prioritize answering these themes when relevant):\n" +
+      ? "\n\nOPEN RUBY & VIN INPUT NOTES (prioritize answering these themes when relevant):\n" +
         rubyNotes.join("\n")
       : "";
 
   let persona =
-    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, support contacts, and any open Ruby input notes. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material.";
-
-  if (isRuby) {
-    persona +=
-      " The current user is Ruby. Be especially warm, patient, and uplifting. Celebrate small wins. Reassure her that forgetting steps is normal and that practice on test patients is smart. Prefer plain language. When her question matches an open Ruby input note, acknowledge that and answer it clearly.";
-  }
+    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, support contacts, and any open Ruby & Vin input notes. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material. Do not address the user as Ruby or change tone based on who is asking.";
 
   const prompt = persona + "\n\n" + ctx + rubyBlock;
 

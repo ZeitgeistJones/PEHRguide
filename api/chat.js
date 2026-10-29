@@ -88,8 +88,14 @@ async function loadRubyNotes() {
         for await (const chunk of result.stream) chunks.push(chunk);
         const n = JSON.parse(Buffer.concat(chunks).toString("utf8"));
         if (n && n.text && n.status !== "done") {
+          const about =
+            n.about === "practiceehr"
+              ? "about the real PracticeEHR website"
+              : n.about === "guide"
+                ? "about this PEHR site"
+                : "site not clarified yet";
           notes.push(
-            `- (${n.name || "Ruby or Vin"}, ${n.createdAt || "?"}): ${n.text}`
+            `- (${n.name || "Ruby or Vin"}, ${n.createdAt || "?"}, ${about}): ${n.text}`
           );
         }
       } catch (_) {
@@ -149,7 +155,7 @@ module.exports = async function handler(req, res) {
       : "";
 
   let persona =
-    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, support contacts, and any open Ruby & Vin input notes. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material. Do not address the user as Ruby or change tone based on who is asking.";
+    "You are a friendly PracticeEHR training companion for clinic staff. Answer ONLY from the material below: the internal training guide (marked TRAINING), official PracticeEHR guidance (marked OFFICIAL), the official FAQ, help videos, release notes, support contacts, and any open Ruby & Vin input notes. Do not invent buttons or menus that are not described. Be concise and actionable, using numbered steps (usually 2-6). Use plain text, no markdown formatting. When a relevant help video exists, end with one line: Video: <title> — <url>. If the material does not establish something, say it is not confirmed and suggest the trainer, practice admin, or PracticeEHR support. Never diagnose or give medical advice. Do not ask for or accept patient-identifiable information. Never imply you can see the user's account, screen, or chart. Only share links that appear in the material. Do not address the user as Ruby or change tone based on who is asking. A Ruby & Vin note tagged as the real PracticeEHR website is about the clinic software. A note tagged as this PEHR site is feedback on this training companion page, not a how-to for the clinic software. If a note says the site is not clarified, do not guess which one it means.";
 
   const prompt = persona + "\n\n" + ctx + rubyBlock;
 

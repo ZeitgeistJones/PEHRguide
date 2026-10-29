@@ -10,7 +10,8 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Arial;color:var(--text)}
-button,input{font:inherit}
+button,input,select{font:inherit}
+.note-about{padding:10px;border:1px solid #c5d4e2;border-radius:9px;background:#fff;color:var(--text)}
 a{color:var(--accent)}
 .sidebar{position:fixed;inset:0 auto 0 0;width:265px;background:var(--nav);color:#f5f8ff;padding:22px 16px;overflow:auto}
 .sidebar h1{font-size:20px;margin:0 0 6px}
@@ -180,12 +181,18 @@ a{color:var(--accent)}
 
   <section class="block" id="ruby-input">
     <h2>Ruby &amp; Vin input</h2>
-    <p class="lead">Ruby &amp; Vin can drop questions, “I got stuck here,” and wishlist notes while using the site. Reopen this section anytime, mark items done, and the AI helper will prefer open notes when answering.</p>
+    <p class="lead">Ruby and Vin can drop questions, “I got stuck here,” and wishlist notes. Say whether the note is about the real PracticeEHR website or this PEHR site. You can add or change that on any note later. The AI helper prefers open notes when answering.</p>
     <form id="rubyForm" class="card" style="margin-bottom:16px">
       <label class="eyebrow" for="rubyName">Who’s writing</label>
       <input id="rubyName" placeholder="Ruby or Vin" maxlength="40" style="width:100%;padding:10px;border:1px solid #c5d4e2;border-radius:9px;margin:6px 0 12px">
       <label class="eyebrow" for="rubyText">Note / question</label>
       <textarea id="rubyText" required maxlength="2000" rows="4" placeholder="Example: I still get lost finding Form Builder → Intake, or I want a clearer path for pre-visit history like TherapyNotes." style="width:100%;padding:10px;border:1px solid #c5d4e2;border-radius:9px;margin:6px 0 12px;resize:vertical;font:inherit"></textarea>
+      <label class="eyebrow" for="rubyAbout">Which site is this about?</label>
+      <select id="rubyAbout" class="note-about" style="width:100%;margin:6px 0 12px">
+        <option value="">Not sure yet</option>
+        <option value="practiceehr">The real PracticeEHR website</option>
+        <option value="guide">This PEHR site</option>
+      </select>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
         <button class="btn primary" type="submit">Save note</button>
         <span id="rubyStatus" class="meta" style="font-size:13px;color:var(--muted)"></span>
@@ -615,11 +622,31 @@ document.querySelectorAll("[data-q]").forEach((b) => {
   }
 })();
 
+const NOTE_ABOUT = {
+  practiceehr: "The real PracticeEHR website",
+  guide: "This PEHR site"
+};
+
+function noteAboutLabel(value) {
+  return NOTE_ABOUT[value] || "Not clarified yet";
+}
+
 async function setupRubyBoard() {
   const list = document.getElementById("rubyList");
   const status = document.getElementById("rubyStatus");
   const form = document.getElementById("rubyForm");
   if (!list || !form) return;
+
+  async function saveNoteChange(body) {
+    const res = await fetch("/api/ruby-input", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Save failed");
+    return data;
+  }
 
   async function loadNotes() {
     list.innerHTML = "";
@@ -634,27 +661,51 @@ async function setupRubyBoard() {
       }
       for (const n of items) {
         const done = n.status === "done";
+        const about = n.about === "practiceehr" || n.about === "guide" ? n.about : "";
+        const aboutPick = el("select", {
+          class: "note-about",
+          "aria-label": "Which site this note is about",
+          onchange: async (e) => {
+            status.textContent = "Saving clarification…";
+            try {
+              await saveNoteChange({ id: n.id, action: "about", about: e.target.value });
+              status.textContent = "Clarification saved.";
+              await loadNotes();
+            } catch (err) {
+              status.textContent = err.message || "Could not save the clarification.";
+              await loadNotes();
+            }
+          }
+        }, [
+          el("option", { value: "", text: "Not clarified yet" }),
+          el("option", { value: "practiceehr", text: "The real PracticeEHR website" }),
+          el("option", { value: "guide", text: "This PEHR site" })
+        ]);
+        aboutPick.value = about;
         const actions = [
           el("button", {
             class: "btn small",
             type: "button",
             text: done ? "Reopen" : "Mark done",
             onclick: async () => {
-              await fetch("/api/ruby-input", {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({ id: n.id, action: "status", status: done ? "open" : "done" })
-              });
-              loadNotes();
+              status.textContent = "Saving…";
+              try {
+                await saveNoteChange({ id: n.id, action: "status", status: done ? "open" : "done" });
+                status.textContent = done ? "Reopened." : "Marked done.";
+                await loadNotes();
+              } catch (err) {
+                status.textContent = err.message || "Save failed";
+              }
             }
-          })
+          }),
+          aboutPick
         ];
         list.append(el("div", {
           class: "card searchable",
-          dataset: { text: ("ruby and vin input " + n.name + " " + n.text + " " + n.status).toLowerCase() },
+          dataset: { text: ("ruby and vin input " + n.name + " " + n.text + " " + n.status + " " + noteAboutLabel(about)).toLowerCase() },
           style: done ? "opacity:.72" : ""
         }, [
-          el("div", { class: "eyebrow", text: (n.name || "Ruby or Vin") + " · " + new Date(n.createdAt).toLocaleString() + (done ? " · done" : " · open") }),
+          el("div", { class: "eyebrow", text: (n.name || "Ruby or Vin") + " · " + new Date(n.createdAt).toLocaleString() + (done ? " · done" : " · open") + " · " + noteAboutLabel(about) }),
           el("p", { class: "subtitle", text: n.text, style: "white-space:pre-wrap" }),
           el("div", { class: "card-actions" }, actions)
         ]));
@@ -668,17 +719,19 @@ async function setupRubyBoard() {
     e.preventDefault();
     const text = document.getElementById("rubyText").value.trim();
     const name = document.getElementById("rubyName").value.trim() || "Ruby or Vin";
+    const about = document.getElementById("rubyAbout").value;
     if (!text) return;
     status.textContent = "Saving…";
     try {
       const res = await fetch("/api/ruby-input", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text, name })
+        body: JSON.stringify({ text, name, about })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Save failed");
       document.getElementById("rubyText").value = "";
+      document.getElementById("rubyAbout").value = "";
       status.textContent = "Saved.";
       await loadNotes();
     } catch (err) {

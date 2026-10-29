@@ -11,6 +11,25 @@ function badRequest(res, error) {
   return res.status(400).json({ error });
 }
 
+function cleanAbout(value) {
+  if (value === "practiceehr" || value === "guide" || value === "") return value;
+  return null;
+}
+
+function safeId(id) {
+  return typeof id === "string" && /^[a-z0-9]+$/i.test(id);
+}
+
+async function writeNote(note) {
+  await put(PREFIX + note.id + ".json", JSON.stringify(note), {
+    access: "private",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "application/json",
+    token: process.env.BLOB_READ_WRITE_TOKEN
+  });
+}
+
 async function readNote(pathname) {
   const result = await get(pathname, {
     access: "private",
@@ -61,15 +80,45 @@ module.exports = async function handler(req, res) {
 
     if (req.method === "POST") {
       const body = req.body || {};
+      const action = typeof body.action === "string" ? body.action : "";
+
+      if (action === "status" || action === "about" || action === "delete") {
+        if (!safeId(body.id)) return res.status(404).json({ error: "Note not found" });
+        if (action === "delete") {
+          await del(PREFIX + body.id + ".json", {
+            token: process.env.BLOB_READ_WRITE_TOKEN
+          });
+          return res.status(200).json({ ok: true });
+        }
+        const items = await readAll();
+        const found = items.find((n) => n.id === body.id);
+        if (!found) return res.status(404).json({ error: "Note not found" });
+        if (action === "status") {
+          found.status = body.status === "done" ? "done" : "open";
+        } else {
+          const about = cleanAbout(typeof body.about === "string" ? body.about : "");
+          if (about === null) {
+            return badRequest(res, "Pick the real PracticeEHR website or this PEHR site.");
+          }
+          found.about = about;
+        }
+        found.updatedAt = new Date().toISOString();
+        await writeNote(found);
+        return res.status(200).json({ item: found });
+      }
+
       const text = typeof body.text === "string" ? body.text.trim() : "";
       const name =
         typeof body.name === "string" && body.name.trim()
           ? body.name.trim().slice(0, 40)
           : "Ruby or Vin";
-      const status = body.status === "done" ? "done" : "open";
+      const about = cleanAbout(typeof body.about === "string" ? body.about : "");
 
       if (!text || text.length > 2000) {
         return badRequest(res, "Write a note between 1 and 2000 characters.");
+      }
+      if (about === null) {
+        return badRequest(res, "Pick the real PracticeEHR website or this PEHR site.");
       }
       if (PHI_RE.test(text)) {
         return badRequest(
@@ -78,46 +127,17 @@ module.exports = async function handler(req, res) {
         );
       }
 
-      // Update existing note status
-      if (typeof body.id === "string" && body.id && body.action === "status") {
-        const items = await readAll();
-        const found = items.find((n) => n.id === body.id);
-        if (!found) return res.status(404).json({ error: "Note not found" });
-        found.status = status;
-        found.updatedAt = new Date().toISOString();
-        await put(PREFIX + found.id + ".json", JSON.stringify(found), {
-          access: "private",
-          addRandomSuffix: false,
-          allowOverwrite: true,
-          contentType: "application/json",
-          token: process.env.BLOB_READ_WRITE_TOKEN
-        });
-        return res.status(200).json({ item: found });
-      }
-
-      if (typeof body.id === "string" && body.id && body.action === "delete") {
-        await del(PREFIX + body.id + ".json", {
-          token: process.env.BLOB_READ_WRITE_TOKEN
-        });
-        return res.status(200).json({ ok: true });
-      }
-
       const id =
         Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       const item = {
         id,
         name,
         text,
+        about,
         status: "open",
         createdAt: new Date().toISOString()
       };
-      await put(PREFIX + id + ".json", JSON.stringify(item), {
-        access: "private",
-        addRandomSuffix: false,
-        allowOverwrite: true,
-        contentType: "application/json",
-        token: process.env.BLOB_READ_WRITE_TOKEN
-      });
+      await writeNote(item);
       return res.status(201).json({ item });
     }
 

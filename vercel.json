@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/chat.js": {
-      "maxDuration": 15
+      "maxDuration": 60
     },
     "api/ruby-input.js": {
       "maxDuration": 10
